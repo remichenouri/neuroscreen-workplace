@@ -1,0 +1,42 @@
+{
+  "wellness_metrics": {
+    "overall_score": 78,
+    "engagement_level": 82,
+    "stress_level": 34,
+    "cognitive_load": 67,
+    "work_life_balance": 75,
+    "team_cohesion": 88
+  },
+  "performance_data": [
+    {"department": "Game Development", "productivity": 85, "engagement": 79, "wellbeing": 72},
+    {"department": "Art & Animation", "productivity": 91, "engagement": 87, "wellbeing": 81},
+    {"department": "QA Testing", "productivity": 76, "engagement": 73, "wellbeing": 69},
+    {"department": "Marketing", "productivity": 83, "engagement": 85, "wellbeing": 78},
+    {"department": "HR", "productivity": 89, "engagement": 92, "wellbeing": 86},
+    {"department": "Operations", "productivity": 80, "engagement": 74, "wellbeing": 71}
+  ],
+  "neuro_insights": [
+    {"metric": "Attention Focus", "value": 73, "trend": "up", "description": "Capacité de concentration moyenne sur tâches complexes"},
+    {"metric": "Emotional Resonance", "value": 81, "trend": "stable", "description": "Engagement émotionnel avec les projets"},
+    {"metric": "Cognitive Load", "value": 67, "trend": "down", "description": "Charge cognitive actuelle des employés"},
+    {"metric": "Stress Response", "value": 45, "trend": "down", "description": "Niveau de stress physiologique mesuré"}
+  ],
+  "learning_programs": [
+    {"name": "NeuroLeadership Essentials", "completion": 67, "participants": 42},
+    {"name": "Cognitive Wellbeing Workshop", "completion": 84, "participants": 38},
+    {"name": "Data-Driven Decision Making", "completion": 72, "participants": 55},
+    {"name": "Mindful Game Development", "completion": 91, "participants": 28}
+  ],
+  "recent_activities": [
+    {"type": "wellness", "message": "Nouveau programme de méditation lancé", "time": "2h"},
+    {"type": "performance", "message": "Rapport mensuel de performance disponible", "time": "4h"},
+    {"type": "learning", "message": "Formation NeuroInsights complétée par 5 employés", "time": "6h"},
+    {"type": "collaboration", "message": "Nouveau projet de team building approuvé", "time": "1d"}
+  ]
+  
+  }[server]
+workingDir = "neuroinsight_hub_streamlit"
+headless = true
+enableCORS = false
+port = 8501
+
