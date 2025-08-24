@@ -446,10 +446,12 @@ elif page == "🧠 Module TDAH":
 
                 st.markdown("### 📊 Résultats du Screening TDAH")
 
-                # Profil détaillé
                 st.markdown(f"""
                 <div class="profile-card">
-                    <div class="profile-title">📋 Votre Profil TDAH Détaillé</div>
+                  <div class="profile-title">📋 Votre Profil TDAH Détaillé</div>
+                  …
+                </div>
+                """, unsafe_allow_html=True)
 
                     <div class="profile-section">
                         <h4>🎯 Scores Obtenus</h4>
@@ -610,7 +612,10 @@ elif page == "🎯 Module Autisme":
                 # Profil détaillé pour l'autisme
                 st.markdown(f"""
                 <div class="profile-card">
-                    <div class="profile-title">🎯 Votre Profil Autistique Détaillé</div>
+                  <div class="profile-title">🎯 Votre Profil Autistique Détaillé</div>
+                  …
+                </div>
+                """, unsafe_allow_html=True)
 
                     <div class="profile-section">
                         <h4>📊 Score Global</h4>
