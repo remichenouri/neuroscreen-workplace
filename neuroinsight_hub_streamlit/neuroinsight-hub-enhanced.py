@@ -1174,8 +1174,7 @@ elif page == "📊 Observatoire Données":
     fig_prev.update_layout(legend_title_text=None, font_family="Inter")
     st.plotly_chart(fig_prev, use_container_width=True)
     
-    # 2. Données Régionales détaillées
-    st.markdown("### 🗺️ Prévalence par Région (France)")
+
     regions = pd.DataFrame({
         "Région": ["Île-de-France","PACA","Nouvelle-Aquitaine","Occitanie","Auvergne-Rhône-Alpes"],
         "Population": [12000000, 5000000, 6000000, 5800000, 8000000],
