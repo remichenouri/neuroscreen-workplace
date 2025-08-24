@@ -12,15 +12,21 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Récupère le dossier où se trouve ce script (app.py)
+# --- BASE_DIR ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Chemin absolu vers metrics.json
+# --- CHARGEMENT DES DONNÉES ---
 metrics_path = os.path.join(BASE_DIR, "data", "metrics.json")
 with open(metrics_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 
-# Chemin absolu vers l’image logo
+well = data["wellness_metrics"]
+perf = pd.DataFrame(data["performance_data"])
+neuro = pd.DataFrame(data["neuro_insights"])
+learn = pd.DataFrame(data["learning_programs"])
+activities = pd.DataFrame(data["recent_activities"])
+
+# --- SIDEBAR LOGO & NAVIGATION ---
 logo_path = os.path.join(BASE_DIR, "assets", "ubisoft_swirl.png")
 st.sidebar.image(logo_path, width=64)
 st.sidebar.title("NeuroInsight Hub")
@@ -30,16 +36,9 @@ page = st.sidebar.radio("Navigation", [
     "Team Collaboration", "Learning & Development", "Settings"
 ])
 
-# Chemin absolu vers le CSS
+# --- STYLE CSS ---
 css_path = os.path.join(BASE_DIR, "assets", "style.css")
 with open(css_path, "r", encoding="utf-8") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# Puis dans la sidebar
-st.sidebar.image(logo_path, width=64)
-
-# --- STYLE CSS ---
-with open("assets/style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # --- FONTS & COULEURS ---
@@ -63,7 +62,8 @@ if page == "Dashboard":
     )
     st.plotly_chart(fig, use_container_width=True)
     st.markdown("### Activités récentes")
-    st.table(activities[["time","message"]].rename(columns={"time":"Depuis","message":"Activité"}))
+    st.table(activities[["time","message"]]
+             .rename(columns={"time":"Depuis","message":"Activité"}))
 
 elif page == "Employee Wellness":
     st.markdown("## Employee Wellness & NeuroInsights")
@@ -100,7 +100,8 @@ elif page == "Learning & Development":
     st.markdown("## Learning & Development")
     st.table(
         learn.rename(columns={
-            "name":"Programme","completion":"Taux de complétion (%)",
+            "name":"Programme",
+            "completion":"Taux de complétion (%)",
             "participants":"Participants"
         })
     )
@@ -110,13 +111,14 @@ elif page == "Settings":
     st.text_input("Nom d’utilisateur", value="admin")
     st.selectbox("Thème", ["Light","Dark"], index=0)
 
-# Footer
+# --- FOOTER ---
 st.markdown(
     "<div style='text-align:center; margin-top:50px; color:#888;'>"
     "© 2025 Ubisoft – NeuroInsight Hub"
     "</div>",
     unsafe_allow_html=True
 )
+
 
 
 
