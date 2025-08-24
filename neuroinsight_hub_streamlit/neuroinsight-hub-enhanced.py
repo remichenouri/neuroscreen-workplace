@@ -264,15 +264,35 @@ page = st.sidebar.selectbox(
      "📈 Analytics & Reporting"]
 )
 
-# Métriques rapides en sidebar
 st.sidebar.markdown("### 📊 Métriques Rapides")
-col1, col2, col3 = st.sidebar.columns(3)
-with col1:
-    st.metric("Employés Neurodivers", "187")
-with col2:
-    st.metric("Taux de Rétention", "92.3%")
-with col3:
-    st.metric("Score Satisfaction", "4.2/5")
+
+# Conteneur flex en CSS pour stMetrics
+st.sidebar.markdown(
+    """
+    <style>
+    .sidebar .metrics-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+    .sidebar .metrics-container .streamlit-expanderHeader {
+        margin: 0;
+    }
+    .sidebar .metrics-container .stMetric {
+        flex: 1;
+        min-width: 4rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Création du conteneur
+st.sidebar.markdown('<div class="metrics-container">', unsafe_allow_html=True)
+st.sidebar.metric("Employés Neurodivers", "187", delta="↗ +2.1%")
+st.sidebar.metric("Taux de Rétention", "92.3%", delta="↗ +0.3%")
+st.sidebar.metric("Score Satisfaction", "4.2/5", delta="↗ +0.3")
+st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
 # Header principal
 st.markdown("""
