@@ -36,10 +36,35 @@ page = st.sidebar.radio("Navigation", [
     "Team Collaboration", "Learning & Development", "Settings"
 ])
 
+# --- GLOBAL CSS FIXES ---
+st.markdown("""
+<style>
+/* Allow vertical scrolling */
+.stApp, .main { overflow-y: auto !important; }
+
+/* Ensure container isn't clipped */
+.block-container { position: relative !important; z-index: 2 !important; min-height: 100vh !important; }
+
+/* Disable overflow hidden */
+html, body, .stApp, .css-1d391kg, .css-1cypcdb { overflow: visible !important; }
+
+/* Ensure cards and charts are on top */
+.stMetric, .stPlot { position: relative !important; z-index: 3 !important; }
+
+/* Expander content visible */
+.streamlit-expanderContent { overflow: visible !important; }
+
+/* Header & Sidebar layering */
+header[data-testid="stHeader"] { z-index: 10 !important; }
+section[data-testid="stSidebar"] { z-index: 5 !important; }
+</style>
+""", unsafe_allow_html=True)
+
 # --- STYLE CSS ---
 css_path = os.path.join(BASE_DIR, "assets", "style.css")
-with open(css_path, "r", encoding="utf-8") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+if os.path.exists(css_path):
+    with open(css_path, "r", encoding="utf-8") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # --- FONTS & COULEURS ---
 PRIMARY = "#000000"
@@ -94,7 +119,7 @@ elif page == "Performance Analytics":
 
 elif page == "Team Collaboration":
     st.markdown("## Team Collaboration")
-    st.write("Module à implémenter : chat interne, feedback, mentoring…")
+    st.info("Module à implémenter : chat interne, feedback, mentoring…")
 
 elif page == "Learning & Development":
     st.markdown("## Learning & Development")
@@ -118,6 +143,7 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
 
 
 
