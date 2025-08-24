@@ -11,9 +11,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# --- CHARGEMENT DES DONNÉES ---
-with open("data/metrics.json", "r", encoding="utf-8") as f:
+import os, json
+
+# 1. Récupère le dossier où se trouve ce script (app.py)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 2. Construit le chemin vers data/metrics.json
+metrics_path = os.path.join(BASE_DIR, "data", "metrics.json")
+
+# 3. Charge le fichier
+with open(metrics_path, "r", encoding="utf-8") as f:
     data = json.load(f)
+
 
 well = data["wellness_metrics"]
 perf = pd.DataFrame(data["performance_data"])
@@ -109,3 +118,4 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
