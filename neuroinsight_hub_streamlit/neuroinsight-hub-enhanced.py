@@ -604,69 +604,34 @@ elif page == "🎯 Module Autisme":
 
             if st.button("Analyser le profil autistique", key="calc_autism"):
                 total_score = sum(scores_autisme)
-
-                st.markdown("### 📊 Résultats de l'Évaluation Autisme")
-
-                # Profil détaillé pour l'autisme
                 st.markdown(f"""
                 <div class="profile-card">
                   <div class="profile-title">🎯 Votre Profil Autistique Détaillé</div>
-                  …
+                  <div class="profile-section">
+                    <h4>📊 Score Global</h4>
+                    <p><strong>Score Total:</strong> {total_score}/50</p>
+                    <p><strong>Pourcentage:</strong> {(total_score/50)*100:.1f}%</p>
+                  </div>
+                  <div class="profile-section">
+                    <h4>🎭 Profil</h4>
+                    {"<p><strong style='color: #dc2626;'>Profil Fort:</strong> Traits marqués.</p>" if total_score >= 40 else
+                     "<p><strong style='color: #ea580c;'>Profil Modéré:</strong> Traits moyens.</p>" if total_score >= 30 else
+                     "<p><strong style='color: #16a34a;'>Profil Léger:</strong> Peu de traits.</p>"}
+                  </div>
+                  <div class="profile-section">
+                    <h4>💎 Forces Identifiées</h4>
+                    <ul>
+                      <li><strong>Attention aux détails:</strong>  …</li>
+                      <li><strong>Fiabilité:</strong>  …</li>
+                    </ul>
+                  </div>
+                  <div class="profile-section">
+                    <h4>🛠️ Accommodations Recommandées</h4>
+                    {"<ul><li>Instructions écrites</li><li>Horaires fixes</li></ul>"}
+                  </div>
                 </div>
                 """, unsafe_allow_html=True)
 
-                    <div class="profile-section">
-                        <h4>📊 Score Global</h4>
-                        <p><strong>Score Total:</strong> {total_score}/50</p>
-                        <p><strong>Pourcentage:</strong> {(total_score/50)*100:.1f}%</p>
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>🎭 Profil et Besoins</h4>
-                        {"<p><strong style='color: #dc2626;'>Profil Fortement Autistique:</strong> Vous présentez de nombreux traits autistiques. Des accommodations significatives pourraient grandement améliorer votre bien-être au travail.</p>" if total_score >= 40 else 
-                         "<p><strong style='color: #ea580c;'>Profil Modérément Autistique:</strong> Vous présentez plusieurs traits autistiques. Certaines accommodations seraient bénéfiques.</p>" if total_score >= 30 else
-                         "<p><strong style='color: #16a34a;'>Profil Légèrement Autistique:</strong> Vous présentez quelques traits autistiques. Des ajustements mineurs peuvent suffire.</p>"}
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>💎 Vos Forces Identifiées</h4>
-                        <ul>
-                            <li><strong>Attention aux détails:</strong> Capacité à détecter des erreurs et inconsistances</li>
-                            <li><strong>Pensée systémique:</strong> Compréhension approfondie des processus complexes</li>
-                            <li><strong>Expertise spécialisée:</strong> Connaissances approfondies dans vos domaines d'intérêt</li>
-                            <li><strong>Fiabilité:</strong> Consistance et précision dans l'exécution des tâches</li>
-                            <li><strong>Objectivité:</strong> Prise de décision basée sur les faits plutôt que les émotions</li>
-                        </ul>
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>🛠️ Accommodations Recommandées</h4>
-                        {"<ul><li>Espace de travail calme et prévisible</li><li>Instructions écrites détaillées</li><li>Horaires fixes et prévisibles</li><li>Réduction des stimuli sensoriels</li><li>Communication directe et claire</li><li>Temps de préparation pour les changements</li></ul>" if total_score >= 40 else
-                         "<ul><li>Environnement de travail structuré</li><li>Préavis pour les changements</li><li>Instructions claires et précises</li><li>Espace personnel respecté</li><li>Meetings organisés et cadrés</li></ul>" if total_score >= 30 else
-                         "<ul><li>Routines de travail claires</li><li>Communication transparente</li><li>Objectifs explicites</li><li>Feedback régulier et constructif</li></ul>"}
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>📈 Plan de Développement</h4>
-                        <ol>
-                            <li><strong>Immediate:</strong> Discutez de vos besoins avec votre manager</li>
-                            <li><strong>Court terme:</strong> Mettez en place les accommodations prioritaires</li>
-                            <li><strong>Moyen terme:</strong> Explorez les opportunités utilisant vos forces</li>
-                            <li><strong>Long terme:</strong> Développez un plan de carrière adapté</li>
-                        </ol>
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>🤝 Ressources et Support</h4>
-                        <ul>
-                            <li>Consultation avec notre spécialiste neurodiversité</li>
-                            <li>Accès au groupe de support autisme</li>
-                            <li>Formation manager sur l'accompagnement autisme</li>
-                            <li>Ressources en ligne sur l'autisme au travail</li>
-                        </ul>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
 
     with tab2:
         st.markdown("### 💪 Forces et Talents Autistiques")
