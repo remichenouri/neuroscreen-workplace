@@ -38,6 +38,17 @@ page = st.sidebar.radio("Navigation", [
     "Dashboard", "Employee Wellness", "Performance Analytics",
     "Team Collaboration", "Learning & Development", "Settings"
 ])
+import os
+import streamlit as st
+
+# Récupère le dossier où se trouve app.py
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Chemin absolu vers l’image
+logo_path = os.path.join(BASE_DIR, "assets", "ubisoft_swirl.png")
+
+# Puis dans la sidebar
+st.sidebar.image(logo_path, width=64)
 
 # --- STYLE CSS ---
 with open("assets/style.css") as f:
@@ -118,4 +129,5 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
 
