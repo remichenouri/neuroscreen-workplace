@@ -1,3 +1,4 @@
+import os
 import json
 import streamlit as st
 import pandas as pd
@@ -11,41 +12,28 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-import os, json
-
-# 1. Récupère le dossier où se trouve ce script (app.py)
+# Récupère le dossier où se trouve ce script (app.py)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 2. Construit le chemin vers data/metrics.json
+# Chemin absolu vers metrics.json
 metrics_path = os.path.join(BASE_DIR, "data", "metrics.json")
-
-# 3. Charge le fichier
 with open(metrics_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 
-
-well = data["wellness_metrics"]
-perf = pd.DataFrame(data["performance_data"])
-neuro = pd.DataFrame(data["neuro_insights"])
-learn = pd.DataFrame(data["learning_programs"])
-activities = pd.DataFrame(data["recent_activities"])
-
-# --- SIDEBAR ---
-st.sidebar.image("assets/ubisoft_swirl.png", width=64)
+# Chemin absolu vers l’image logo
+logo_path = os.path.join(BASE_DIR, "assets", "ubisoft_swirl.png")
+st.sidebar.image(logo_path, width=64)
 st.sidebar.title("NeuroInsight Hub")
 st.sidebar.caption("Ubisoft HR Platform")
 page = st.sidebar.radio("Navigation", [
     "Dashboard", "Employee Wellness", "Performance Analytics",
     "Team Collaboration", "Learning & Development", "Settings"
 ])
-import os
-import streamlit as st
 
-# Récupère le dossier où se trouve app.py
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Chemin absolu vers l’image
-logo_path = os.path.join(BASE_DIR, "assets", "ubisoft_swirl.png")
+# Chemin absolu vers le CSS
+css_path = os.path.join(BASE_DIR, "assets", "style.css")
+with open(css_path, "r", encoding="utf-8") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Puis dans la sidebar
 st.sidebar.image(logo_path, width=64)
@@ -129,5 +117,6 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
 
 
