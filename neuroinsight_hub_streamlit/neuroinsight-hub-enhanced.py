@@ -1,5 +1,5 @@
-# NeuroInsight Hub - Version Workspace Complète
-# Application Streamlit dense intégrant TDAH, Autisme, et Observatoire
+# NeuroInsight Hub - Version Workspace Professionnelle
+# Application Streamlit avec design moderne et fonctionnalités RH avancées
 
 import os
 import json
@@ -10,18 +10,20 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import numpy as np
 
-# --- CONFIGURATION ---
+# --- CONFIGURATION AVANCÉE ---
 st.set_page_config(
     page_title="NeuroInsight Hub - Workspace",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://www.ubisoft.com',
+        'Report a bug': "https://www.ubisoft.com",
+        'About': "# NeuroInsight Hub\nPlateforme RH de gestion de la neurodiversité - Ubisoft"
+    }
 )
 
-# --- BASE_DIR ET DONNÉES ---
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Données complètes intégrées (remplace metrics.json)
+# --- DONNÉES ENRICHIES ---
 DATA = {
     "company_metrics": {
         "total_employees": 1247,
@@ -32,7 +34,10 @@ DATA = {
         "dyslexia_employees": 46,
         "retention_rate": 92.3,
         "satisfaction_score": 4.2,
-        "productivity_increase": 18.5
+        "productivity_increase": 18.5,
+        "roi_percentage": 312,
+        "cost_savings": 145000,
+        "training_completion": 94.7
     },
     "adhd_statistics": {
         "global_prevalence": 5.0,
@@ -42,10 +47,16 @@ DATA = {
         "persistence_adulthood": 66.0,
         "comorbidity_rate": 50.0,
         "workplace_challenges": {
-            "attention_difficulties": 87.3,
-            "time_management": 78.6,
-            "organization": 82.1,
-            "impulsivity": 69.4
+            "Difficultés d'attention": 87.3,
+            "Gestion du temps": 78.6,
+            "Organisation": 82.1,
+            "Impulsivité": 69.4
+        },
+        "success_factors": {
+            "Structure claire": 94.2,
+            "Feedback régulier": 89.1,
+            "Pauses fréquentes": 85.7,
+            "Environnement calme": 91.3
         }
     },
     "autism_statistics": {
@@ -55,10 +66,12 @@ DATA = {
         "europe_population": 7000000,
         "workplace_participation": 42.0,
         "strengths": {
-            "attention_to_detail": 94.2,
-            "pattern_recognition": 89.7,
-            "logical_reasoning": 91.3,
-            "reliability": 88.9
+            "Attention aux détails": 94.2,
+            "Reconnaissance de motifs": 89.7,
+            "Raisonnement logique": 91.3,
+            "Fiabilité": 88.9,
+            "Expertise technique": 92.1,
+            "Qualité du travail": 95.3
         }
     },
     "observatoire_data": {
@@ -73,15 +86,18 @@ DATA = {
             {"region": "Île-de-France", "tdah": 3.2, "autism": 1.1, "population": 12000000},
             {"region": "PACA", "tdah": 3.4, "autism": 0.9, "population": 5000000},
             {"region": "Nouvelle-Aquitaine", "tdah": 3.1, "autism": 1.0, "population": 6000000},
-            {"region": "Occitanie", "tdah": 3.3, "autism": 0.8, "population": 5800000}
+            {"region": "Occitanie", "tdah": 3.3, "autism": 0.8, "population": 5800000},
+            {"region": "Grand Est", "tdah": 3.0, "autism": 0.9, "population": 5500000}
         ]
     },
     "performance_data": [
-        {"department": "IT", "productivity": 118, "engagement": 89, "wellbeing": 85, "neurodiverse_ratio": 22.4},
-        {"department": "Design", "productivity": 125, "engagement": 94, "wellbeing": 88, "neurodiverse_ratio": 28.1},
-        {"department": "Finance", "productivity": 108, "engagement": 76, "wellbeing": 81, "neurodiverse_ratio": 11.8},
-        {"department": "Marketing", "productivity": 115, "engagement": 82, "wellbeing": 79, "neurodiverse_ratio": 19.3},
-        {"department": "Support", "productivity": 102, "engagement": 78, "wellbeing": 83, "neurodiverse_ratio": 15.7}
+        {"department": "Développement", "productivity": 125, "engagement": 94, "wellbeing": 88, "neurodiverse_ratio": 28.1, "innovation": 9.2},
+        {"department": "Design UX/UI", "productivity": 122, "engagement": 91, "wellbeing": 85, "neurodiverse_ratio": 32.5, "innovation": 9.4},
+        {"department": "Data Science", "productivity": 118, "engagement": 89, "wellbeing": 82, "neurodiverse_ratio": 35.2, "innovation": 8.9},
+        {"department": "QA Testing", "productivity": 128, "engagement": 87, "wellbeing": 90, "neurodiverse_ratio": 41.3, "innovation": 7.8},
+        {"department": "Marketing", "productivity": 115, "engagement": 82, "wellbeing": 79, "neurodiverse_ratio": 19.3, "innovation": 8.1},
+        {"department": "Finance", "productivity": 108, "engagement": 76, "wellbeing": 81, "neurodiverse_ratio": 11.8, "innovation": 7.1},
+        {"department": "RH", "productivity": 112, "engagement": 85, "wellbeing": 87, "neurodiverse_ratio": 16.4, "innovation": 8.3}
     ],
     "screening_questions": {
         "adhd": [
@@ -104,1213 +120,1254 @@ DATA = {
         ]
     },
     "workplace_accommodations": [
-        {"condition": "ADHD", "accommodation": "Environnement calme", "impact": 8.5, "cost": "Faible"},
-        {"condition": "ADHD", "accommodation": "Pauses régulières", "impact": 7.8, "cost": "Aucun"},
-        {"condition": "ADHD", "accommodation": "Outils numériques d'organisation", "impact": 9.1, "cost": "Moyen"},
-        {"condition": "Autism", "accommodation": "Instructions écrites détaillées", "impact": 9.2, "cost": "Faible"},
-        {"condition": "Autism", "accommodation": "Horaires flexibles", "impact": 8.7, "cost": "Faible"},
-        {"condition": "Autism", "accommodation": "Réduction stimuli sensoriels", "impact": 8.9, "cost": "Moyen"}
+        {"condition": "ADHD", "accommodation": "Environnement de travail calme", "impact": 8.5, "cost": "Faible", "implementation": "1 semaine"},
+        {"condition": "ADHD", "accommodation": "Pauses régulières (15min/2h)", "impact": 7.8, "cost": "Aucun", "implementation": "Immédiat"},
+        {"condition": "ADHD", "accommodation": "Outils numériques d'organisation", "impact": 9.1, "cost": "Moyen", "implementation": "2 semaines"},
+        {"condition": "ADHD", "accommodation": "Instructions écrites détaillées", "impact": 8.3, "cost": "Aucun", "implementation": "Immédiat"},
+        {"condition": "Autism", "accommodation": "Instructions écrites détaillées", "impact": 9.2, "cost": "Faible", "implementation": "1 jour"},
+        {"condition": "Autism", "accommodation": "Horaires de travail flexibles", "impact": 8.7, "cost": "Faible", "implementation": "1 semaine"},
+        {"condition": "Autism", "accommodation": "Réduction des stimuli sensoriels", "impact": 8.9, "cost": "Moyen", "implementation": "2 semaines"},
+        {"condition": "Autism", "accommodation": "Communication prévisible et structurée", "impact": 9.0, "cost": "Aucun", "implementation": "Immédiat"}
     ],
     "recent_activities": [
-        {"time": "Il y a 2h", "message": "Nouveau screening TDAH complété", "type": "assessment"},
-        {"time": "Il y a 4h", "message": "Accommodations mises en place pour 3 employés", "type": "accommodation"},
-        {"time": "Il y a 6h", "message": "Rapport mensuel généré", "type": "report"},
-        {"time": "Il y a 1j", "message": "Formation managers neurodiversité", "type": "training"},
-        {"time": "Il y a 2j", "message": "5 nouveaux candidats évalués", "type": "recruitment"}
+        {"time": "Il y a 2h", "message": "Nouveau screening TDAH complété - Score: 67%", "type": "assessment", "priority": "medium"},
+        {"time": "Il y a 4h", "message": "3 accommodations implémentées avec succès", "type": "accommodation", "priority": "high"},
+        {"time": "Il y a 6h", "message": "Rapport mensuel généré et envoyé", "type": "report", "priority": "low"},
+        {"time": "Il y a 1j", "message": "Formation managers neurodiversité - 15 participants", "type": "training", "priority": "high"},
+        {"time": "Il y a 2j", "message": "5 nouveaux candidats évalués", "type": "recruitment", "priority": "medium"}
     ]
 }
 
-# --- INTERFACE PRINCIPALE ---
-def main():
-    # Logo et titre
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        st.markdown("# 🧠 NeuroInsight Hub - Workspace")
-        st.markdown("### *Plateforme complète de gestion de la neurodiversité*")
-    
-    with col2:
-        st.image("https://logos-world.net/wp-content/uploads/2021/01/Ubisoft-Logo.png", width=120)
-
-    # Sidebar Navigation
-    st.sidebar.markdown("## 🎯 Navigation")
-    page = st.sidebar.selectbox(
-        "Sélectionner un module",
-        [
-            "🏠 Dashboard Principal",
-            "🧠 Module TDAH", 
-            "🎯 Module Autisme",
-            "📊 Observatoire Données",
-            "🔬 NeuroScreen Évaluations",
-            "🏢 Gestion Workplace",
-            "👥 Recrutement Neurodiversité",
-            "📈 Analytics & Reporting"
-        ]
-    )
-    
-    # Métriques sidebar
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("### 📊 Métriques Rapides")
-    st.sidebar.metric("Employés Neurodivers", f"{DATA['company_metrics']['neurodiverse_employees']}")
-    st.sidebar.metric("Taux de Rétention", f"{DATA['company_metrics']['retention_rate']}%")
-    st.sidebar.metric("Score Satisfaction", f"{DATA['company_metrics']['satisfaction_score']}/5")
-    
-    # Router vers les modules
-    if page == "🏠 Dashboard Principal":
-        dashboard_principal()
-    elif page == "🧠 Module TDAH":
-        module_tdah()
-    elif page == "🎯 Module Autisme":
-        module_autisme()
-    elif page == "📊 Observatoire Données":
-        observatoire_donnees()
-    elif page == "🔬 NeuroScreen Évaluations":
-        neuroscreen_evaluations()
-    elif page == "🏢 Gestion Workplace":
-        gestion_workplace()
-    elif page == "👥 Recrutement Neurodiversité":
-        recrutement_neurodiversite()
-    elif page == "📈 Analytics & Reporting":
-        analytics_reporting()
-
-# --- DASHBOARD PRINCIPAL ---
-def dashboard_principal():
-    st.markdown("## 🏠 Dashboard Principal")
-    
-    # KPIs principaux
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.metric(
-            "👥 Total Employés", 
-            DATA['company_metrics']['total_employees'],
-            delta="↗ +3.2%"
-        )
-    
-    with col2:
-        st.metric(
-            "🧠 Employés Neurodivers", 
-            f"{DATA['company_metrics']['neurodiverse_employees']} ({DATA['company_metrics']['neurodiverse_percentage']}%)",
-            delta="↗ +2.1%"
-        )
-    
-    with col3:
-        st.metric(
-            "📈 Augmentation Productivité", 
-            f"{DATA['company_metrics']['productivity_increase']}%",
-            delta="↗ +5.3%"
-        )
-    
-    with col4:
-        st.metric(
-            "⭐ Score Bien-être", 
-            f"{DATA['company_metrics']['satisfaction_score']}/5",
-            delta="↗ +0.3"
-        )
-    
-    st.markdown("---")
-    
-    # Graphiques principaux
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        # Répartition neurodiversité
-        fig_pie = go.Figure(data=[go.Pie(
-            labels=['TDAH', 'Autisme', 'Dyslexie', 'Autres'],
-            values=[
-                DATA['company_metrics']['adhd_employees'],
-                DATA['company_metrics']['autism_employees'], 
-                DATA['company_metrics']['dyslexia_employees'],
-                DATA['company_metrics']['neurodiverse_employees'] - 
-                DATA['company_metrics']['adhd_employees'] - 
-                DATA['company_metrics']['autism_employees'] - 
-                DATA['company_metrics']['dyslexia_employees']
-            ],
-            hole=0.4
-        )])
-        fig_pie.update_layout(title="Répartition des Conditions Neurodivergentes")
-        st.plotly_chart(fig_pie, use_container_width=True)
-    
-    with col2:
-        # Performance par département
-        df_perf = pd.DataFrame(DATA['performance_data'])
-        fig_bar = px.bar(
-            df_perf, 
-            x='department', 
-            y=['productivity', 'engagement', 'wellbeing'],
-            title="Performance par Département",
-            color_discrete_sequence=['#c4bc74', '#223c4c', '#aca45c']
-        )
-        st.plotly_chart(fig_bar, use_container_width=True)
-    
-    # Activités récentes
-    st.markdown("### 📋 Activités Récentes")
-    for activity in DATA['recent_activities']:
-        icon = {"assessment": "🔍", "accommodation": "🔧", "report": "📊", "training": "🎓", "recruitment": "👤"}
-        st.markdown(f"**{activity['time']}** - {icon.get(activity['type'], '•')} {activity['message']}")
-
-# --- MODULE TDAH ---
-def module_tdah():
-    st.markdown("## 🧠 Module TDAH - Trouble du Déficit de l'Attention/Hyperactivité")
-    
-    # Onglets
-    tab1, tab2, tab3, tab4 = st.tabs(["📋 Screening", "📊 Statistiques", "🎯 Accommodations", "📈 Suivi"])
-    
-    with tab1:
-        st.markdown("### 🔍 Screening TDAH")
-        st.info("**Prévalence**: 5% population mondiale • 3% adultes France • Ratio M/F: 2.3:1")
-        
-        # Questionnaire interactif
-        with st.expander("🔴 Démarrer le Screening TDAH", expanded=False):
-            scores = {"inattention": 0, "hyperactivity": 0, "impulsivity": 0}
-            
-            st.markdown("**Répondez aux questions suivantes (0=Jamais, 4=Très souvent):**")
-            
-            for i, item in enumerate(DATA['screening_questions']['adhd']):
-                score = st.slider(
-                    f"{i+1}. {item['q']}", 
-                    min_value=0, max_value=4, value=0, 
-                    key=f"adhd_{i}"
-                )
-                scores[item['category']] += score * item['weight']
-            
-            if st.button("📊 Calculer le Résultat"):
-                total_score = sum(scores.values())
-                max_possible = len(DATA['screening_questions']['adhd']) * 4 * 1.2
-                percentage = (total_score / max_possible) * 100
-                
-                st.markdown("### 🎯 Résultats du Screening")
-                
-                if percentage >= 60:
-                    st.error(f"**Score: {percentage:.1f}%** - Probabilité élevée de TDAH. Recommandation: Évaluation approfondie.")
-                elif percentage >= 40:
-                    st.warning(f"**Score: {percentage:.1f}%** - Indicateurs modérés. Recommandation: Suivi et accommodations préventives.")
-                else:
-                    st.success(f"**Score: {percentage:.1f}%** - Probabilité faible. Aucune action immédiate nécessaire.")
-                
-                # Répartition par catégorie
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("Inattention", f"{(scores['inattention']/total_score*100):.0f}%" if total_score > 0 else "0%")
-                with col2:
-                    st.metric("Hyperactivité", f"{(scores['hyperactivity']/total_score*100):.0f}%" if total_score > 0 else "0%")
-                with col3:
-                    st.metric("Impulsivité", f"{(scores['impulsivity']/total_score*100):.0f}%" if total_score > 0 else "0%")
-    
-    with tab2:
-        st.markdown("### 📊 Statistiques TDAH")
-        
-        # Métriques clés
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.metric("Prévalence Mondiale", "5.0%")
-        with col2:
-            st.metric("Adultes France", "3.0%")
-        with col3:
-            st.metric("Persistance Adulte", "66.0%")
-        with col4:
-            st.metric("Comorbidités", "50.0%")
-        
-        # Graphique défis workplace
-        challenges = DATA['adhd_statistics']['workplace_challenges']
-        fig_challenges = go.Figure([go.Bar(
-            x=list(challenges.keys()),
-            y=list(challenges.values()),
-            marker_color='#c4bc74'
-        )])
-        fig_challenges.update_layout(title="Défis Principaux en Milieu Professionnel (%)")
-        st.plotly_chart(fig_challenges, use_container_width=True)
-    
-    with tab3:
-        st.markdown("### 🎯 Accommodations Recommandées")
-        
-        tdah_accommodations = [acc for acc in DATA['workplace_accommodations'] if acc['condition'] == 'ADHD']
-        
-        for acc in tdah_accommodations:
-            with st.expander(f"🔧 {acc['accommodation']}", expanded=False):
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.markdown(f"**Impact Score**: {acc['impact']}/10")
-                    st.progress(acc['impact']/10)
-                with col2:
-                    st.markdown(f"**Coût**: {acc['cost']}")
-                    color = {"Aucun": "green", "Faible": "orange", "Moyen": "red"}[acc['cost']]
-                    st.markdown(f":{color}[●] Niveau de coût")
-    
-    with tab4:
-        st.markdown("### 📈 Suivi et Évolution")
-        
-        # Graphique d'évolution simulé
-        dates = pd.date_range(start='2024-01-01', periods=12, freq='M')
-        progress_data = {
-            'Date': dates,
-            'Attention': np.random.normal(70, 10, 12).cumsum() / 12 + 50,
-            'Organisation': np.random.normal(65, 8, 12).cumsum() / 12 + 45,
-            'Productivité': np.random.normal(75, 12, 12).cumsum() / 12 + 55
-        }
-        
-        df_progress = pd.DataFrame(progress_data)
-        fig_progress = px.line(
-            df_progress, 
-            x='Date', 
-            y=['Attention', 'Organisation', 'Productivité'],
-            title="Évolution des Métriques TDAH (Moyenne des employés)"
-        )
-        st.plotly_chart(fig_progress, use_container_width=True)
-
-# --- MODULE AUTISME ---
-def module_autisme():
-    st.markdown("## 🎯 Module Autisme - Troubles du Spectre Autistique")
-    
-    tab1, tab2, tab3, tab4 = st.tabs(["📋 Évaluation", "💪 Forces", "🛠️ Accommodations", "📊 Analytics"])
-    
-    with tab1:
-        st.markdown("### 🔍 Évaluation Autisme")
-        st.info("**Emploi**: 22% taux d'emploi • 85% chômage • 7M personnes en Europe")
-        
-        with st.expander("🟢 Démarrer l'Évaluation Autisme", expanded=False):
-            autism_scores = {"social": 0, "sensory": 0, "routines": 0, "interests": 0}
-            
-            for i, item in enumerate(DATA['screening_questions']['autism']):
-                score = st.slider(
-                    f"{i+1}. {item['q']}", 
-                    min_value=0, max_value=4, value=0,
-                    key=f"autism_{i}"
-                )
-                autism_scores[item['category']] += score * item['weight']
-            
-            if st.button("📊 Évaluer"):
-                total = sum(autism_scores.values())
-                max_score = len(DATA['screening_questions']['autism']) * 4 * 1.4
-                percentage = (total / max_score) * 100
-                
-                st.markdown("### 🎯 Profil Autisme")
-                
-                if percentage >= 55:
-                    st.warning(f"**Score: {percentage:.1f}%** - Traits autistiques significatifs détectés.")
-                elif percentage >= 35:
-                    st.info(f"**Score: {percentage:.1f}%** - Quelques traits présents. Suivi recommandé.")
-                else:
-                    st.success(f"**Score: {percentage:.1f}%** - Peu de traits détectés.")
-                
-                # Radar chart des domaines
-                categories = list(autism_scores.keys())
-                values = [autism_scores[cat] for cat in categories]
-                
-                fig_radar = go.Figure()
-                fig_radar.add_trace(go.Scatterpolar(
-                    r=values,
-                    theta=categories,
-                    fill='toself',
-                    name='Profil'
-                ))
-                fig_radar.update_layout(
-                    polar=dict(radialaxis=dict(visible=True, range=[0, max(values)])),
-                    title="Profil par Domaines"
-                )
-                st.plotly_chart(fig_radar, use_container_width=True)
-    
-    with tab2:
-        st.markdown("### 💪 Forces et Talents Autistiques")
-        
-        strengths = DATA['autism_statistics']['strengths']
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("🎯 Attention aux Détails", f"{strengths['attention_to_detail']}%")
-            st.metric("🔍 Reconnaissance Motifs", f"{strengths['pattern_recognition']}%")
-        
-        with col2:
-            st.metric("🧠 Raisonnement Logique", f"{strengths['logical_reasoning']}%")
-            st.metric("✅ Fiabilité", f"{strengths['reliability']}%")
-        
-        # Graphique des forces
-        fig_strengths = go.Figure([go.Bar(
-            x=list(strengths.keys()),
-            y=list(strengths.values()),
-            marker_color='#223c4c',
-            text=[f"{v}%" for v in strengths.values()],
-            textposition='auto'
-        )])
-        fig_strengths.update_layout(title="Pourcentage d'Employés Autistes Excellant dans Chaque Domaine")
-        st.plotly_chart(fig_strengths, use_container_width=True)
-        
-        st.success("**Opportunités**: Rôles analytiques, QA, développement, recherche, audit")
-    
-    with tab3:
-        st.markdown("### 🛠️ Accommodations Workplace")
-        
-        autism_accommodations = [acc for acc in DATA['workplace_accommodations'] if acc['condition'] == 'Autism']
-        
-        for i, acc in enumerate(autism_accommodations):
-            col1, col2 = st.columns([3, 1])
-            with col1:
-                st.markdown(f"**{acc['accommodation']}**")
-                st.progress(acc['impact']/10)
-                st.caption(f"Impact: {acc['impact']}/10 • Coût: {acc['cost']}")
-            with col2:
-                if st.button(f"Implémenter", key=f"impl_autism_{i}"):
-                    st.success("✅ Programmé")
-    
-    with tab4:
-        st.markdown("### 📊 Analytics Autisme")
-        
-        # Données simulées d'engagement
-        departments = ['IT', 'Design', 'Finance', 'Support']
-        autism_success = [95, 88, 76, 82]
-        neurotypical_success = [78, 79, 84, 80]
-        
-        fig_comparison = go.Figure()
-        fig_comparison.add_trace(go.Bar(
-            name='Employés Autistes',
-            x=departments,
-            y=autism_success,
-            marker_color='#c4bc74'
-        ))
-        fig_comparison.add_trace(go.Bar(
-            name='Employés Neurotypiques',
-            x=departments,
-            y=neurotypical_success,
-            marker_color='#aca45c'
-        ))
-        
-        fig_comparison.update_layout(
-            title='Comparaison Performance par Département (%)',
-            barmode='group'
-        )
-        st.plotly_chart(fig_comparison, use_container_width=True)
-
-# --- OBSERVATOIRE DONNÉES ---
-def observatoire_donnees():
-    st.markdown("## 📊 Observatoire des Données Neurodiversité")
-    
-    tab1, tab2, tab3 = st.tabs(["📈 Évolution France", "🗺️ Données Régionales", "🌍 Comparaisons Internationales"])
-    
-    with tab1:
-        st.markdown("### 📈 Évolution de la Prévalence en France")
-        
-        # Graphique évolution temporelle
-        df_evolution = pd.DataFrame(DATA['observatoire_data']['france_prevalence_evolution'])
-        
-        fig_evolution = go.Figure()
-        fig_evolution.add_trace(go.Scatter(
-            x=df_evolution['year'],
-            y=df_evolution['tdah'],
-            mode='lines+markers',
-            name='TDAH',
-            line=dict(color='#c4bc74', width=3)
-        ))
-        fig_evolution.add_trace(go.Scatter(
-            x=df_evolution['year'],
-            y=df_evolution['autism'],
-            mode='lines+markers',
-            name='Autisme',
-            line=dict(color='#223c4c', width=3)
-        ))
-        
-        fig_evolution.update_layout(
-            title='Évolution de la Prévalence (%): 2020-2024',
-            xaxis_title='Année',
-            yaxis_title='Prévalence (%)',
-            hovermode='x unified'
-        )
-        st.plotly_chart(fig_evolution, use_container_width=True)
-        
-        # Métriques clés
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric("TDAH 2024", "3.7%", "+0.2%")
-        with col2:
-            st.metric("Autisme 2024", "1.1%", "+0.1%")
-        with col3:
-            st.metric("Total Neurodivers", "4.8%", "+0.3%")
-    
-    with tab2:
-        st.markdown("### 🗺️ Données Régionales France")
-        
-        df_regional = pd.DataFrame(DATA['observatoire_data']['regional_data'])
-        
-        # Graphique régional
-        fig_regional = go.Figure()
-        fig_regional.add_trace(go.Bar(
-            name='TDAH',
-            x=df_regional['region'],
-            y=df_regional['tdah'],
-            marker_color='#c4bc74'
-        ))
-        fig_regional.add_trace(go.Bar(
-            name='Autisme',
-            x=df_regional['region'],
-            y=df_regional['autism'],
-            marker_color='#223c4c'
-        ))
-        
-        fig_regional.update_layout(
-            title='Prévalence par Région (%)',
-            xaxis_tickangle=-45,
-            barmode='group'
-        )
-        st.plotly_chart(fig_regional, use_container_width=True)
-        
-        # Tableau détaillé
-        st.markdown("### 📋 Données Détaillées par Région")
-        df_display = df_regional.copy()
-        df_display['population_formatted'] = df_display['population'].apply(lambda x: f"{x:,}")
-        df_display['estimated_tdah'] = (df_display['tdah'] / 100 * df_display['population']).astype(int)
-        df_display['estimated_autism'] = (df_display['autism'] / 100 * df_display['population']).astype(int)
-        
-        st.dataframe(
-            df_display[['region', 'population_formatted', 'tdah', 'autism', 'estimated_tdah', 'estimated_autism']],
-            column_config={
-                "region": "Région",
-                "population_formatted": "Population",
-                "tdah": st.column_config.NumberColumn("TDAH (%)", format="%.1f%%"),
-                "autism": st.column_config.NumberColumn("Autisme (%)", format="%.1f%%"),
-                "estimated_tdah": "Est. TDAH",
-                "estimated_autism": "Est. Autisme"
-            }
-        )
-    
-    with tab3:
-        st.markdown("### 🌍 Comparaisons Internationales")
-        
-        # Données internationales simulées
-        countries_data = {
-            'Pays': ['France', 'Allemagne', 'UK', 'Suède', 'Espagne', 'Italie'],
-            'TDAH': [3.5, 4.2, 3.9, 4.8, 3.1, 2.9],
-            'Autisme': [1.0, 1.2, 1.4, 1.3, 0.8, 0.9],
-            'Support_Workplace': [6.2, 8.1, 7.8, 9.2, 5.4, 4.9]
-        }
-        
-        df_international = pd.DataFrame(countries_data)
-        
-        # Graphique comparatif
-        fig_intl = go.Figure()
-        
-        fig_intl.add_trace(go.Scatter(
-            x=df_international['TDAH'],
-            y=df_international['Autisme'],
-            mode='markers+text',
-            text=df_international['Pays'],
-            textposition="top center",
-            marker=dict(
-                size=df_international['Support_Workplace']*5,
-                color=df_international['Support_Workplace'],
-                colorscale='Viridis',
-                showscale=True,
-                colorbar=dict(title="Support Workplace")
-            )
-        ))
-        
-        fig_intl.update_layout(
-            title='Prévalence TDAH vs Autisme par Pays (taille = support workplace)',
-            xaxis_title='TDAH (%)',
-            yaxis_title='Autisme (%)'
-        )
-        st.plotly_chart(fig_intl, use_container_width=True)
-
-# --- NEUROSCREEN ÉVALUATIONS ---
-def neuroscreen_evaluations():
-    st.markdown("## 🔬 NeuroScreen - Évaluations Neuroscientifiques")
-    
-    st.info("🧠 **NeuroScreen** utilise des tests cognitifs standardisés pour évaluer les fonctions neuropsychologiques")
-    
-    tab1, tab2, tab3 = st.tabs(["🧪 Tests Disponibles", "📊 Nouvelle Évaluation", "📈 Résultats"])
-    
-    with tab1:
-        st.markdown("### 🧪 Batterie de Tests NeuroScreen")
-        
-        tests = [
-            {
-                "name": "Attention Soutenue",
-                "domain": "Attention", 
-                "duration": 15,
-                "description": "Mesure la capacité à maintenir l'attention sur une tâche répétitive"
-            },
-            {
-                "name": "Mémoire de Travail",
-                "domain": "Mémoire",
-                "duration": 10, 
-                "description": "Évalue la capacité à manipuler l'information en mémoire à court terme"
-            },
-            {
-                "name": "Flexibilité Cognitive",
-                "domain": "Fonctions Exécutives",
-                "duration": 12,
-                "description": "Mesure l'adaptation aux changements de règles et de contexte"
-            },
-            {
-                "name": "Vitesse de Traitement",
-                "domain": "Vitesse Cognitive",
-                "duration": 8,
-                "description": "Évalue la rapidité de traitement de l'information visuelle"
-            },
-            {
-                "name": "Inhibition",
-                "domain": "Contrôle Cognitif",
-                "duration": 10,
-                "description": "Mesure la capacité à supprimer des réponses automatiques"
-            }
-        ]
-        
-        for test in tests:
-            with st.expander(f"🔬 {test['name']} ({test['duration']} min)", expanded=False):
-                col1, col2 = st.columns([2, 1])
-                with col1:
-                    st.markdown(f"**Domaine**: {test['domain']}")
-                    st.markdown(f"**Description**: {test['description']}")
-                with col2:
-                    if st.button(f"Lancer Test", key=f"start_{test['name']}"):
-                        st.success("✅ Test programmé")
-    
-    with tab2:
-        st.markdown("### 📊 Nouvelle Évaluation Complète")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            employee_id = st.text_input("ID Employé")
-            test_reason = st.selectbox("Raison de l'évaluation", [
-                "Screening initial", 
-                "Suivi périodique", 
-                "Demande d'accommodation",
-                "Évaluation post-formation"
-            ])
-        
-        with col2:
-            priority = st.selectbox("Priorité", ["Standard", "Urgente", "Recherche"])
-            notes = st.text_area("Notes additionnelles")
-        
-        if st.button("🚀 Lancer Évaluation Complète"):
-            # Simulation d'une évaluation
-            progress_bar = st.progress(0)
-            status_text = st.empty()
-            
-            import time
-            
-            for i in range(100):
-                progress_bar.progress(i + 1)
-                if i < 20:
-                    status_text.text('Initialisation des tests...')
-                elif i < 50:
-                    status_text.text('Tests cognitifs en cours...')
-                elif i < 80:
-                    status_text.text('Analyse des résultats...')
-                else:
-                    status_text.text('Génération du rapport...')
-                time.sleep(0.02)
-            
-            st.success("✅ Évaluation terminée! Rapport disponible dans l'onglet Résultats.")
-    
-    with tab3:
-        st.markdown("### 📈 Résultats et Interprétations")
-        
-        # Simulation de résultats
-        if st.selectbox("Sélectionner un rapport", ["Rapport #2024-001", "Rapport #2024-002", "Rapport #2024-003"]):
-            
-            # Scores simulés
-            scores = {
-                'Attention Soutenue': np.random.normal(85, 15),
-                'Mémoire de Travail': np.random.normal(78, 12),
-                'Flexibilité Cognitive': np.random.normal(82, 10),
-                'Vitesse de Traitement': np.random.normal(75, 18),
-                'Inhibition': np.random.normal(88, 8)
-            }
-            
-            # Radar chart des résultats
-            fig_results = go.Figure()
-            fig_results.add_trace(go.Scatterpolar(
-                r=list(scores.values()),
-                theta=list(scores.keys()),
-                fill='toself',
-                name='Scores'
-            ))
-            fig_results.update_layout(
-                polar=dict(
-                    radialaxis=dict(
-                        visible=True,
-                        range=[0, 100]
-                    )),
-                title="Profil Cognitif NeuroScreen"
-            )
-            st.plotly_chart(fig_results, use_container_width=True)
-            
-            # Interprétations
-            st.markdown("### 🔍 Interprétations")
-            
-            for domain, score in scores.items():
-                col1, col2 = st.columns([1, 2])
-                with col1:
-                    if score >= 85:
-                        st.success(f"{domain}: {score:.0f}")
-                    elif score >= 70:
-                        st.warning(f"{domain}: {score:.0f}")
-                    else:
-                        st.error(f"{domain}: {score:.0f}")
-                
-                with col2:
-                    if score >= 85:
-                        st.write("✅ Performance supérieure - Force identifiée")
-                    elif score >= 70:
-                        st.write("⚠️ Performance moyenne - Surveillance recommandée") 
-                    else:
-                        st.write("🚨 Difficultés détectées - Accommodations nécessaires")
-
-# --- GESTION WORKPLACE ---
-def gestion_workplace():
-    st.markdown("## 🏢 Gestion Workplace - Accommodations & Support")
-    
-    tab1, tab2, tab3, tab4 = st.tabs(["🔧 Accommodations", "📝 Demandes", "📊 Suivi", "🎯 Impact"])
-    
-    with tab1:
-        st.markdown("### 🔧 Catalogue d'Accommodations")
-        
-        # Filtre par condition
-        condition_filter = st.selectbox("Filtrer par condition", ["Toutes", "ADHD", "Autism", "Dyslexie"])
-        
-        accommodations = DATA['workplace_accommodations']
-        if condition_filter != "Toutes":
-            accommodations = [acc for acc in accommodations if acc['condition'] == condition_filter]
-        
-        for acc in accommodations:
-            with st.expander(f"🛠️ {acc['accommodation']} ({acc['condition']})", expanded=False):
-                col1, col2, col3 = st.columns(3)
-                
-                with col1:
-                    st.metric("Impact Score", f"{acc['impact']}/10")
-                    st.progress(acc['impact']/10)
-                
-                with col2:
-                    cost_color = {"Aucun": "green", "Faible": "orange", "Moyen": "red"}[acc['cost']]
-                    st.markdown(f"**Coût**: :{cost_color}[{acc['cost']}]")
-                
-                with col3:
-                    if st.button(f"Recommander", key=f"rec_{acc['accommodation']}"):
-                        st.success("✅ Ajouté aux recommandations")
-    
-    with tab2:
-        st.markdown("### 📝 Nouvelles Demandes d'Accommodation")
-        
-        with st.form("nouvelle_demande"):
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                employee_name = st.text_input("Nom de l'employé")
-                condition = st.selectbox("Condition", ["TDAH", "Autisme", "Dyslexie", "Autre"])
-                department = st.selectbox("Département", ["IT", "Design", "Finance", "Marketing", "Support"])
-            
-            with col2:
-                urgency = st.selectbox("Urgence", ["Normale", "Élevée", "Critique"])
-                requested_accommodation = st.text_area("Accommodation demandée")
-                justification = st.text_area("Justification")
-            
-            submitted = st.form_submit_button("📤 Soumettre la Demande")
-            
-            if submitted:
-                st.success("✅ Demande soumise avec succès! ID: ACC-2024-" + str(np.random.randint(1000, 9999)))
-    
-    with tab3:
-        st.markdown("### 📊 Suivi des Accommodations")
-        
-        # Statut des accommodations
-        col1, col2, col3, col4 = st.columns(4)
-        
-        with col1:
-            st.metric("🔄 En Cours", "12", "+3")
-        with col2:
-            st.metric("✅ Implémentées", "28", "+8")
-        with col3:
-            st.metric("⏳ En Attente", "5", "-2")
-        with col4:
-            st.metric("📊 Taux Succès", "94%", "+2%")
-        
-        # Timeline des accommodations
-        st.markdown("#### 📅 Timeline Récente")
-        timeline_data = [
-            {"date": "2024-01-15", "action": "Accommodation approved", "employee": "Marie D.", "type": "ADHD"},
-            {"date": "2024-01-14", "action": "New request submitted", "employee": "Jean P.", "type": "Autism"},
-            {"date": "2024-01-13", "action": "Implementation completed", "employee": "Sophie L.", "type": "Dyslexia"},
-            {"date": "2024-01-12", "action": "Assessment scheduled", "employee": "Paul M.", "type": "ADHD"}
-        ]
-        
-        for item in timeline_data:
-            st.markdown(f"**{item['date']}** - {item['action']} ({item['employee']}) - *{item['type']}*")
-    
-    with tab4:
-        st.markdown("### 🎯 Mesure d'Impact")
-        
-        # Métriques d'impact
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            # Satisfaction avant/après
-            satisfaction_data = {
-                'Période': ['Avant Accommodations', 'Après Accommodations'],
-                'Score': [3.2, 4.4]
-            }
-            fig_satisfaction = px.bar(
-                satisfaction_data, 
-                x='Période', 
-                y='Score',
-                title="Impact sur la Satisfaction (Score/5)",
-                color_discrete_sequence=['#c4bc74']
-            )
-            st.plotly_chart(fig_satisfaction, use_container_width=True)
-        
-        with col2:
-            # Productivité par type d'accommodation
-            productivity_data = {
-                'Accommodation': ['Environnement calme', 'Horaires flexibles', 'Outils numériques'],
-                'Amélioration': [23, 31, 28]
-            }
-            fig_productivity = px.bar(
-                productivity_data,
-                x='Accommodation',
-                y='Amélioration',
-                title="Amélioration Productivité (%)",
-                color_discrete_sequence=['#223c4c']
-            )
-            st.plotly_chart(fig_productivity, use_container_width=True)
-        
-        # ROI des accommodations
-        st.markdown("#### 💰 Retour sur Investissement")
-        
-        roi_metrics = {
-            "Coût Total Accommodations": "€45,320",
-            "Augmentation Productivité": "+18.5%", 
-            "Réduction Turnover": "-34%",
-            "ROI Estimé": "312%"
-        }
-        
-        col1, col2, col3, col4 = st.columns(4)
-        for i, (metric, value) in enumerate(roi_metrics.items()):
-            [col1, col2, col3, col4][i].metric(metric, value)
-
-# --- RECRUTEMENT NEURODIVERSITÉ ---
-def recrutement_neurodiversite():
-    st.markdown("## 👥 Recrutement Neurodiversité - Processus Inclusifs")
-    
-    tab1, tab2, tab3 = st.tabs(["🎯 Guide Recrutement", "📊 Pipeline", "📈 Métriques"])
-    
-    with tab1:
-        st.markdown("### 🎯 Guide de Recrutement Inclusif")
-        
-        # Checklist recrutement
-        st.markdown("#### ✅ Checklist Processus Inclusif")
-        
-        checklist = [
-            "Description de poste claire et spécifique",
-            "Canaux de diffusion diversifiés", 
-            "Processus de candidature flexible",
-            "Entretiens adaptés (questions concrètes)",
-            "Évaluation basée sur les compétences",
-            "Feedback constructif systématique",
-            "Accompagnement lors de l'intégration"
-        ]
-        
-        for item in checklist:
-            st.checkbox(item, value=True)
-        
-        # Bonnes pratiques par étape
-        with st.expander("📝 Rédaction d'Offres Inclusives", expanded=False):
-            st.markdown("""
-            **À faire:**
-            - Utiliser un langage clair et direct
-            - Lister les compétences essentielles uniquement
-            - Mentionner l'engagement diversité
-            - Proposer des accommodations
-            
-            **À éviter:**
-            - Jargon et métaphores
-            - Listes interminables de qualifications
-            - Références à la "culture fit"
-            - Exigences non essentielles
-            """)
-        
-        with st.expander("🎤 Conduite d'Entretiens Adaptés", expanded=False):
-            st.markdown("""
-            **Techniques recommandées:**
-            - Questions concrètes et spécifiques
-            - Exemples de situations réelles
-            - Tests pratiques plutôt que théoriques
-            - Environnement calme et prévisible
-            
-            **Questions à privilégier:**
-            - "Décrivez comment vous aborderiez cette tâche"
-            - "Montrez-nous votre processus de résolution"
-            - "Quels outils utilisez-vous pour vous organiser?"
-            """)
-    
-    with tab2:
-        st.markdown("### 📊 Pipeline de Recrutement")
-        
-        # Funnel de recrutement
-        funnel_data = {
-            'Étape': ['Candidatures', 'Présélection', 'Entretien 1', 'Test Technique', 'Entretien Final', 'Offres'],
-            'Candidats Neurodivers': [156, 89, 67, 58, 43, 35],
-            'Candidats Standard': [1240, 620, 310, 248, 186, 124]
-        }
-        
-        fig_funnel = go.Figure()
-        
-        fig_funnel.add_trace(go.Funnel(
-            name='Candidats Neurodivers',
-            y=funnel_data['Étape'],
-            x=funnel_data['Candidats Neurodivers'],
-            textinfo="value+percent initial"
-        ))
-        
-        st.plotly_chart(fig_funnel, use_container_width=True)
-        
-        # Taux de conversion
-        st.markdown("#### 📈 Taux de Conversion")
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.metric("Candidatures → Entretiens", "43%", "+8% vs standard")
-            st.metric("Entretiens → Offres", "52%", "+12% vs standard")
-        
-        with col2:
-            st.metric("Acceptation Offres", "89%", "+15% vs standard") 
-            st.metric("Rétention 12 mois", "93%", "+18% vs standard")
-    
-    with tab3:
-        st.markdown("### 📈 Métriques de Performance")
-        
-        # Performance post-embauche
-        perf_data = {
-            'Métrique': ['Performance Éval.', 'Innovation Score', 'Satisfaction Manager', 'Collaboration'],
-            'Neurodivers': [4.3, 8.7, 4.1, 3.9],
-            'Moyenne': [3.8, 7.2, 3.9, 4.2]
-        }
-        
-        fig_perf = go.Figure()
-        fig_perf.add_trace(go.Bar(
-            name='Employés Neurodivers',
-            x=perf_data['Métrique'],
-            y=perf_data['Neurodivers'],
-            marker_color='#c4bc74'
-        ))
-        fig_perf.add_trace(go.Bar(
-            name='Moyenne Générale',
-            x=perf_data['Métrique'],
-            y=perf_data['Moyenne'],
-            marker_color='#aca45c'
-        ))
-        
-        fig_perf.update_layout(
-            title='Performance Post-Recrutement (Score/5 ou /10)',
-            barmode='group'
-        )
-        st.plotly_chart(fig_perf, use_container_width=True)
-        
-        # Sources de recrutement efficaces
-        st.markdown("#### 🎯 Sources de Recrutement les Plus Efficaces")
-        
-        source_data = {
-            'Source': ['Partenariats Asso.', 'Sites Spécialisés', 'Cooptation', 'Universités', 'LinkedIn'],
-            'Candidatures': [45, 38, 29, 34, 67],
-            'Embauches': [12, 8, 9, 6, 8],
-            'Taux_Succès': [26.7, 21.1, 31.0, 17.6, 11.9]
-        }
-        
-        df_sources = pd.DataFrame(source_data)
-        
-        fig_sources = go.Figure()
-        fig_sources.add_trace(go.Scatter(
-            x=df_sources['Candidatures'],
-            y=df_sources['Embauches'],
-            mode='markers+text',
-            text=df_sources['Source'],
-            textposition="top center",
-            marker=dict(
-                size=df_sources['Taux_Succès'],
-                color=df_sources['Taux_Succès'],
-                colorscale='Viridis',
-                showscale=True,
-                colorbar=dict(title="Taux de Succès (%)")
-            )
-        ))
-        
-        fig_sources.update_layout(
-            title='Efficacité des Sources de Recrutement',
-            xaxis_title='Nombre de Candidatures',
-            yaxis_title='Nombre d\'Embauches'
-        )
-        st.plotly_chart(fig_sources, use_container_width=True)
-
-# --- ANALYTICS & REPORTING ---
-def analytics_reporting():
-    st.markdown("## 📈 Analytics & Reporting - Insights Avancés")
-    
-    tab1, tab2, tab3 = st.tabs(["📊 Dashboard Exécutif", "📋 Rapports", "🔮 Prédictions"])
-    
-    with tab1:
-        st.markdown("### 📊 Dashboard Exécutif")
-        
-        # KPIs Exécutifs
-        kpi_col1, kpi_col2, kpi_col3, kpi_col4 = st.columns(4)
-        
-        with kpi_col1:
-            st.metric("ROI Programme", "312%", "+45%")
-        with kpi_col2:
-            st.metric("Coût par Accommodation", "€1,620", "-€230")
-        with kpi_col3:
-            st.metric("Temps Implémentation", "12 jours", "-3 jours")
-        with kpi_col4:
-            st.metric("Score Maturité", "8.2/10", "+1.1")
-        
-        # Graphique tendances business
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            # Evolution ROI
-            months = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin']
-            roi_evolution = [180, 210, 245, 278, 295, 312]
-            
-            fig_roi = go.Figure()
-            fig_roi.add_trace(go.Scatter(
-                x=months, 
-                y=roi_evolution,
-                mode='lines+markers',
-                line=dict(color='#c4bc74', width=3),
-                fill='tonexty'
-            ))
-            fig_roi.update_layout(title="Évolution ROI Programme (%)")
-            st.plotly_chart(fig_roi, use_container_width=True)
-        
-        with col2:
-            # Répartition investissements
-            invest_data = {
-                'Catégorie': ['Accommodations', 'Formation', 'Outils Tech', 'Évaluations'],
-                'Montant': [45320, 23400, 18750, 12300]
-            }
-            
-            fig_invest = px.pie(
-                invest_data, 
-                values='Montant', 
-                names='Catégorie',
-                title="Répartition des Investissements (€)"
-            )
-            st.plotly_chart(fig_invest, use_container_width=True)
-    
-    with tab2:
-        st.markdown("### 📋 Génération de Rapports")
-        
-        # Générateur de rapports
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            report_type = st.selectbox("Type de Rapport", [
-                "Rapport Mensuel Complet",
-                "Analyse ROI Détaillée", 
-                "Évaluation Accommodations",
-                "Performance par Département",
-                "Rapport de Conformité"
-            ])
-            
-            period = st.selectbox("Période", [
-                "Dernier Mois",
-                "Dernier Trimestre", 
-                "6 Derniers Mois",
-                "Année Courante"
-            ])
-        
-        with col2:
-            format_output = st.selectbox("Format", ["PDF", "Excel", "PowerPoint"])
-            recipients = st.multiselect("Destinataires", [
-                "Direction RH", "CEO", "Managers", "Équipe Neurodiversité"
-            ])
-        
-        if st.button("🚀 Générer le Rapport"):
-            progress = st.progress(0)
-            status = st.empty()
-            
-            import time
-            for i in range(100):
-                progress.progress(i + 1)
-                if i < 30:
-                    status.text("Collecte des données...")
-                elif i < 60:
-                    status.text("Génération des graphiques...")
-                elif i < 90:
-                    status.text("Compilation du rapport...")
-                else:
-                    status.text("Finalisation...")
-                time.sleep(0.02)
-            
-            st.success("✅ Rapport généré avec succès!")
-            st.download_button(
-                "📥 Télécharger le Rapport",
-                data="Rapport généré - Données confidentielles",
-                file_name=f"rapport_neurodiversite_{datetime.now().strftime('%Y%m%d')}.pdf"
-            )
-    
-    with tab3:
-        st.markdown("### 🔮 Analytics Prédictifs")
-        
-        # Prédictions basées sur l'IA
-        st.info("🤖 Modèles prédictifs basés sur l'historique et les tendances actuelles")
-        
-        # Prédiction besoins accommodations
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.markdown("#### 📈 Prédiction Demandes d'Accommodations")
-            
-            pred_months = ['Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Dec']
-            current = [8, 12, 15, 11, 9, 14]
-            predicted = [16, 18, 22, 19, 17, 21]
-            
-            fig_pred = go.Figure()
-            fig_pred.add_trace(go.Scatter(
-                x=pred_months, 
-                y=current,
-                mode='lines+markers',
-                name='Historique',
-                line=dict(color='#223c4c')
-            ))
-            fig_pred.add_trace(go.Scatter(
-                x=pred_months, 
-                y=predicted,
-                mode='lines+markers',
-                name='Prédiction',
-                line=dict(color='#c4bc74', dash='dash')
-            ))
-            fig_pred.update_layout(title="Demandes Mensuelles Prévues")
-            st.plotly_chart(fig_pred, use_container_width=True)
-        
-        with col2:
-            st.markdown("#### 🎯 Recommandations IA")
-            
-            recommendations = [
-                {"priority": "Haute", "action": "Augmenter budget accommodations de 25%"},
-                {"priority": "Moyenne", "action": "Former 3 managers supplémentaires"},
-                {"priority": "Moyenne", "action": "Développer partenariat avec asso. autisme"},
-                {"priority": "Faible", "action": "Mettre à jour politique diversité"}
-            ]
-            
-            for rec in recommendations:
-                priority_color = {"Haute": "🔴", "Moyenne": "🟡", "Faible": "🟢"}
-                st.markdown(f"{priority_color[rec['priority']]} **{rec['priority']}**: {rec['action']}")
-        
-        # Modèle de risque de turnover
-        st.markdown("#### ⚠️ Analyse de Risque de Turnover")
-        
-        risk_data = {
-            'Employé': ['Emp001', 'Emp023', 'Emp045', 'Emp067', 'Emp089'],
-            'Condition': ['TDAH', 'Autisme', 'TDAH', 'Dyslexie', 'Autisme'],
-            'Risque': [25, 65, 15, 45, 80],
-            'Facteurs': [
-                'Charge de travail élevée',
-                'Accommodations insuffisantes', 
-                'Adaptation en cours',
-                'Changement d\'équipe',
-                'Problèmes sensoriels'
-            ]
-        }
-        
-        df_risk = pd.DataFrame(risk_data)
-        
-        fig_risk = px.bar(
-            df_risk, 
-            x='Employé', 
-            y='Risque',
-            color='Condition',
-            title="Risque de Turnover par Employé (%)"
-        )
-        st.plotly_chart(fig_risk, use_container_width=True)
-        
-        # Actions recommandées
-        st.markdown("**Actions Immédiates Recommandées:**")
-        for _, row in df_risk[df_risk['Risque'] > 50].iterrows():
-            st.warning(f"🚨 {row['Employé']} ({row['Condition']}) - Risque {row['Risque']}%: {row['Facteurs']}")
-
-# --- STYLES CSS ---
-def apply_custom_css():
+# --- STYLES CSS AVANCÉS ---
+def apply_professional_css():
     st.markdown("""
     <style>
-    /* Variables CSS */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    /* Variables CSS professionnelles */
     :root {
-        --primary-color: #000000;
+        --primary-color: #1a1a1a;
+        --secondary-color: #2c2c2c;
         --accent-color: #c4bc74;
-        --dark-bg: #041e28;
-        --text-light: #ffffff;
+        --accent-hover: #b5ac65;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --error-color: #ef4444;
+        --info-color: #3b82f6;
+        --background-light: #f8fafc;
+        --background-card: #ffffff;
+        --text-primary: #0f172a;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --gradient-primary: linear-gradient(135deg, #c4bc74 0%, #b5ac65 100%);
+        --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
     }
-    
-    /* Sidebar styling */
+
+    /* Reset et base */
+    .stApp {
+        font-family: 'Inter', sans-serif;
+        background: var(--background-light);
+    }
+
+    /* Sidebar moderne */
     .css-1d391kg {
-        background-color: var(--dark-bg);
+        background: var(--gradient-dark) !important;
+        border-right: 1px solid var(--border-color);
     }
-    
-    /* Metrics styling */
+
+    .css-1d391kg .stSelectbox label {
+        color: white !important;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .css-1d391kg .stMarkdown {
+        color: white;
+    }
+
+    .css-1d391kg h2 {
+        color: var(--accent-color) !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .css-1d391kg h3 {
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        margin-top: 1.5rem !important;
+    }
+
+    /* Métriques professionnelles */
     [data-testid="metric-container"] {
-        background-color: rgba(196, 188, 116, 0.1);
-        border: 1px solid var(--accent-color);
-        padding: 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background: var(--background-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
     }
-    
-    /* Headers */
-    h1, h2, h3 {
-        color: var(--primary-color);
-        font-weight: 600;
+
+    [data-testid="metric-container"]:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
     }
-    
-    /* Buttons */
+
+    [data-testid="metric-container"]:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+
+    [data-testid="metric-container"] [data-testid="metric-label"] {
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        color: var(--text-secondary) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    [data-testid="metric-container"] [data-testid="metric-value"] {
+        font-size: 28px !important;
+        font-weight: 700 !important;
+        color: var(--text-primary) !important;
+        line-height: 1.2;
+    }
+
+    /* Headers avec gradient */
+    h1, h2 {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+    }
+
+    h1 {
+        font-size: 2.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    h2 {
+        font-size: 1.875rem !important;
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    h3 {
+        color: var(--text-primary) !important;
+        font-weight: 600 !important;
+        font-size: 1.25rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* Boutons modernes */
     .stButton button {
-        background-color: var(--accent-color);
-        color: var(--primary-color);
+        background: var(--gradient-primary);
+        color: white;
         border: none;
-        border-radius: 0.25rem;
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stButton button:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #b5ac65 0%, #a89c58 100%);
+    }
+
+    /* Formulaires élégants */
+    .stTextInput > div > div > input,
+    .stTextArea > div > div > textarea,
+    .stSelectbox > div > div > select {
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+
+    .stTextInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus,
+    .stSelectbox > div > div > select:focus {
+        border-color: var(--accent-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(196, 188, 116, 0.1);
+    }
+
+    /* Messages d'état stylisés */
+    .stSuccess {
+        background: rgba(16, 185, 129, 0.1) !important;
+        border: 1px solid var(--success-color) !important;
+        border-radius: 8px !important;
+        border-left: 4px solid var(--success-color) !important;
+    }
+
+    .stWarning {
+        background: rgba(245, 158, 11, 0.1) !important;
+        border: 1px solid var(--warning-color) !important;
+        border-radius: 8px !important;
+        border-left: 4px solid var(--warning-color) !important;
+    }
+
+    .stError {
+        background: rgba(239, 68, 68, 0.1) !important;
+        border: 1px solid var(--error-color) !important;
+        border-radius: 8px !important;
+        border-left: 4px solid var(--error-color) !important;
+    }
+
+    .stInfo {
+        background: rgba(59, 130, 246, 0.1) !important;
+        border: 1px solid var(--info-color) !important;
+        border-radius: 8px !important;
+        border-left: 4px solid var(--info-color) !important;
+    }
+
+    /* Expanders modernes */
+    .streamlit-expanderHeader {
+        background: var(--background-card) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        padding: 1rem !important;
+        transition: all 0.3s ease;
+    }
+
+    .streamlit-expanderHeader:hover {
+        background: var(--background-light) !important;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .streamlit-expanderContent {
+        border: 1px solid var(--border-color) !important;
+        border-top: none !important;
+        border-radius: 0 0 8px 8px !important;
+        background: var(--background-card) !important;
+    }
+
+    /* Tableaux professionnels */
+    .stDataFrame {
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: var(--shadow-sm) !important;
+        border: 1px solid var(--border-color) !important;
+    }
+
+    .stDataFrame table {
+        font-size: 14px !important;
+    }
+
+    .stDataFrame th {
+        background: var(--background-light) !important;
+        font-weight: 600 !important;
+        color: var(--text-primary) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 1rem !important;
+    }
+
+    .stDataFrame td {
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid var(--border-color) !important;
+    }
+
+    /* Progress bars */
+    .stProgress > div > div > div {
+        background: var(--gradient-primary) !important;
+        border-radius: 4px !important;
+    }
+
+    /* Tabs modernes */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background: var(--background-card);
+        padding: 4px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        height: 50px;
+        padding: 0 24px;
+        background: transparent;
+        border-radius: 8px;
+        color: var(--text-secondary);
         font-weight: 500;
         transition: all 0.3s ease;
     }
-    
-    .stButton button:hover {
-        background-color: #b5ac65;
-        transform: translateY(-1px);
+
+    .stTabs [data-baseweb="tab"]:hover {
+        background: var(--background-light);
+        color: var(--text-primary);
     }
-    
-    /* Success/Warning/Error messages */
-    .stSuccess {
-        background-color: rgba(0, 128, 0, 0.1);
-        border-left: 4px solid green;
+
+    .stTabs [aria-selected="true"] {
+        background: var(--gradient-primary) !important;
+        color: white !important;
     }
-    
-    .stWarning {
-        background-color: rgba(255, 165, 0, 0.1);
-        border-left: 4px solid orange;
-    }
-    
-    .stError {
-        background-color: rgba(255, 0, 0, 0.1);
-        border-left: 4px solid red;
-    }
-    
-    /* Expanders */
-    .streamlit-expanderHeader {
-        background-color: rgba(196, 188, 116, 0.05);
-        border-radius: 0.25rem;
-    }
-    
-    /* Tables */
-    .stDataFrame {
-        border-radius: 0.5rem;
+
+    /* Cards */
+    .metric-card {
+        background: var(--background-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s ease;
+        position: relative;
         overflow: hidden;
+    }
+
+    .metric-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-4px);
+    }
+
+    .metric-card:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
+    }
+
+    /* Sliders */
+    .stSlider > div > div > div {
+        color: var(--accent-color) !important;
+    }
+
+    /* Checkboxes */
+    .stCheckbox > label > span {
+        color: var(--text-primary) !important;
+        font-weight: 500;
+    }
+
+    /* Selectboxes dans sidebar */
+    .css-1d391kg .stSelectbox > div > div {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 8px !important;
+    }
+
+    /* Footer */
+    .footer {
+        margin-top: 4rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 14px;
+    }
+
+    /* Custom classes */
+    .highlight-card {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 2rem;
+        border-radius: 16px;
+        margin: 1rem 0;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .stat-badge {
+        display: inline-block;
+        background: var(--accent-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0.25rem;
     }
     </style>
     """, unsafe_allow_html=True)
 
+# --- HEADER PROFESSIONNEL ---
+def render_header():
+    col1, col2, col3 = st.columns([2, 3, 1])
+    
+    with col1:
+        st.markdown("""
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="background: linear-gradient(135deg, #c4bc74 0%, #b5ac65 100%); 
+                        width: 60px; height: 60px; border-radius: 12px; 
+                        display: flex; align-items: center; justify-content: center; 
+                        font-size: 24px; color: white; font-weight: bold;">🧠</div>
+            <div>
+                <h1 style="margin: 0; font-size: 24px;">NeuroInsight Hub</h1>
+                <p style="margin: 0; color: #64748b; font-size: 14px;">Workspace RH - Neurodiversité</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        # KPIs rapides en header
+        metric_col1, metric_col2, metric_col3 = st.columns(3)
+        with metric_col1:
+            st.markdown(f"""
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div style="font-size: 24px; font-weight: bold; color: #1a1a1a;">{DATA['company_metrics']['neurodiverse_employees']}</div>
+                <div style="font-size: 12px; color: #64748b; text-transform: uppercase;">Employés Neurodivers</div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with metric_col2:
+            st.markdown(f"""
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div style="font-size: 24px; font-weight: bold; color: #10b981;">{DATA['company_metrics']['roi_percentage']}%</div>
+                <div style="font-size: 12px; color: #64748b; text-transform: uppercase;">ROI Programme</div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with metric_col3:
+            st.markdown(f"""
+            <div style="text-align: center; padding: 1rem; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div style="font-size: 24px; font-weight: bold; color: #c4bc74;">{DATA['company_metrics']['satisfaction_score']}/5</div>
+                <div style="font-size: 12px; color: #64748b; text-transform: uppercase;">Satisfaction</div>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    with col3:
+        # Logo Ubisoft
+        st.image("https://logos-world.net/wp-content/uploads/2021/01/Ubisoft-Logo.png", width=100)
+
+# --- SIDEBAR AMÉLIORÉE ---
+def render_sidebar():
+    with st.sidebar:
+        st.markdown("""
+        <div style="text-align: center; padding: 2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem;">
+            <div style="background: linear-gradient(135deg, #c4bc74 0%, #b5ac65 100%); 
+                        width: 60px; height: 60px; border-radius: 50%; 
+                        display: flex; align-items: center; justify-content: center; 
+                        font-size: 24px; color: white; margin: 0 auto 1rem;">🧠</div>
+            <h2 style="color: white; margin: 0; font-size: 20px;">NeuroInsight Hub</h2>
+            <p style="color: #c4bc74; margin: 0; font-size: 14px;">Plateforme RH Professionnelle</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Navigation
+        st.markdown("## 🎯 Navigation")
+        
+        modules = [
+            ("🏠", "Dashboard Principal"),
+            ("🧠", "Module TDAH"), 
+            ("🎯", "Module Autisme"),
+            ("📊", "Observatoire Données"),
+            ("🔬", "NeuroScreen Évaluations"),
+            ("🏢", "Gestion Workplace"),
+            ("👥", "Recrutement Neurodiversité"),
+            ("📈", "Analytics & Reporting")
+        ]
+        
+        page = st.selectbox(
+            "Sélectionner un module",
+            options=[f"{icon} {name}" for icon, name in modules],
+            format_func=lambda x: x
+        )
+        
+        # Métriques sidebar avec style amélioré
+        st.markdown("---")
+        st.markdown("### 📊 Métriques Temps Réel")
+        
+        # Métrique avec indicateur de tendance
+        for label, value, delta, color in [
+            ("Employés Neurodivers", DATA['company_metrics']['neurodiverse_employees'], "+12", "#10b981"),
+            ("Taux de Rétention", f"{DATA['company_metrics']['retention_rate']}%", "+2.3%", "#3b82f6"),
+            ("Score Satisfaction", f"{DATA['company_metrics']['satisfaction_score']}/5", "+0.3", "#c4bc74")
+        ]:
+            st.markdown(f"""
+            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                <div style="color: white; font-size: 18px; font-weight: bold;">{value}</div>
+                <div style="color: #c4bc74; font-size: 12px; margin-bottom: 0.5rem;">{label}</div>
+                <div style="color: {color}; font-size: 11px;">↗ {delta}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Alertes importantes
+        st.markdown("### 🚨 Alertes Importantes")
+        st.markdown("""
+        <div style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; 
+                    border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <div style="color: #f59e0b; font-weight: bold; font-size: 12px;">⚠️ ATTENTION</div>
+            <div style="color: white; font-size: 14px;">5 demandes d'accommodation en attente</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Progression mensuelle
+        st.markdown("### 📈 Progression Mensuelle")
+        progress_value = 73
+        st.markdown(f"""
+        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
+            <div style="color: white; font-size: 14px; margin-bottom: 0.5rem;">Objectifs Atteints</div>
+            <div style="background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; overflow: hidden;">
+                <div style="background: linear-gradient(90deg, #c4bc74, #b5ac65); height: 100%; width: {progress_value}%;"></div>
+            </div>
+            <div style="color: #c4bc74; font-size: 12px; margin-top: 0.5rem;">{progress_value}% complété</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        return page
+
+# --- DASHBOARD PRINCIPAL AMÉLIORÉ ---
+def dashboard_principal():
+    st.markdown("# 🏠 Dashboard Principal")
+    st.markdown("*Vue d'ensemble de la neurodiversité en entreprise*")
+    
+    # KPIs principaux avec design moderne
+    st.markdown("### 📊 Métriques Clés")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    metrics_data = [
+        ("👥 Total Employés", DATA['company_metrics']['total_employees'], "↗ +3.2%", "#3b82f6"),
+        ("🧠 Employés Neurodivers", f"{DATA['company_metrics']['neurodiverse_employees']} ({DATA['company_metrics']['neurodiverse_percentage']}%)", "↗ +2.1%", "#10b981"),
+        ("📈 Productivité", f"+{DATA['company_metrics']['productivity_increase']}%", "↗ +5.3%", "#c4bc74"),
+        ("💰 ROI", f"{DATA['company_metrics']['roi_percentage']}%", "↗ +45%", "#f59e0b")
+    ]
+    
+    for i, (label, value, delta, color) in enumerate(metrics_data):
+        with [col1, col2, col3, col4][i]:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div style="color: {color}; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">{label}</div>
+                <div style="font-size: 32px; font-weight: bold; color: #1a1a1a; margin-bottom: 0.5rem;">{value}</div>
+                <div style="color: #10b981; font-size: 14px; font-weight: 500;">{delta}</div>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Section graphiques avec layout amélioré
+    col1, col2 = st.columns([1.2, 1])
+    
+    with col1:
+        st.markdown("### 📈 Performance par Département")
+        
+        # Graphique performance amélioré
+        df_perf = pd.DataFrame(DATA['performance_data'])
+        
+        fig_performance = go.Figure()
+        
+        # Barres de productivité
+        fig_performance.add_trace(go.Bar(
+            name='Productivité',
+            x=df_perf['department'],
+            y=df_perf['productivity'],
+            marker=dict(
+                color='#c4bc74',
+                line=dict(color='#b5ac65', width=1)
+            ),
+            text=df_perf['productivity'],
+            textposition='auto',
+            hovertemplate='<b>%{x}</b><br>Productivité: %{y}%<extra></extra>'
+        ))
+        
+        # Ligne d'engagement
+        fig_performance.add_trace(go.Scatter(
+            name='Engagement',
+            x=df_perf['department'],
+            y=df_perf['engagement'],
+            mode='lines+markers',
+            line=dict(color='#10b981', width=3),
+            marker=dict(size=8, color='#10b981'),
+            yaxis='y2',
+            hovertemplate='<b>%{x}</b><br>Engagement: %{y}%<extra></extra>'
+        ))
+        
+        fig_performance.update_layout(
+            title={
+                'text': 'Productivité et Engagement par Département',
+                'x': 0.5,
+                'font': {'size': 16, 'family': 'Inter'}
+            },
+            xaxis_title='Département',
+            yaxis_title='Productivité (%)',
+            yaxis2=dict(
+                title='Engagement (%)',
+                overlaying='y',
+                side='right'
+            ),
+            hovermode='x unified',
+            template='plotly_white',
+            height=400,
+            font=dict(family='Inter'),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            )
+        )
+        
+        st.plotly_chart(fig_performance, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 🎯 Répartition Neurodiversité")
+        
+        # Donut chart moderne
+        labels = ['TDAH', 'Autisme', 'Dyslexie', 'Autres conditions']
+        values = [
+            DATA['company_metrics']['adhd_employees'],
+            DATA['company_metrics']['autism_employees'],
+            DATA['company_metrics']['dyslexia_employees'],
+            DATA['company_metrics']['neurodiverse_employees'] - 
+            DATA['company_metrics']['adhd_employees'] - 
+            DATA['company_metrics']['autism_employees'] - 
+            DATA['company_metrics']['dyslexia_employees']
+        ]
+        
+        colors = ['#c4bc74', '#3b82f6', '#10b981', '#f59e0b']
+        
+        fig_donut = go.Figure(data=[go.Pie(
+            labels=labels,
+            values=values,
+            hole=0.6,
+            marker=dict(colors=colors, line=dict(color='white', width=2)),
+            textinfo='label+percent',
+            textfont=dict(size=12, family='Inter'),
+            hovertemplate='<b>%{label}</b><br>%{value} employés (%{percent})<extra></extra>'
+        )])
+        
+        fig_donut.update_layout(
+            title={
+                'text': 'Distribution des Conditions',
+                'x': 0.5,
+                'font': {'size': 16, 'family': 'Inter'}
+            },
+            height=400,
+            font=dict(family='Inter'),
+            showlegend=True,
+            legend=dict(
+                orientation="v",
+                yanchor="middle",
+                y=0.5,
+                xanchor="left",
+                x=1.05
+            )
+        )
+        
+        # Annotation au centre
+        fig_donut.add_annotation(
+            text=f"<b>{DATA['company_metrics']['neurodiverse_employees']}</b><br>Total",
+            x=0.5, y=0.5,
+            font_size=20,
+            showarrow=False
+        )
+        
+        st.plotly_chart(fig_donut, use_container_width=True)
+    
+    # Section activités avec design amélioré
+    col1, col2 = st.columns([1.5, 1])
+    
+    with col1:
+        st.markdown("### 📋 Activités Récentes")
+        
+        for activity in DATA['recent_activities']:
+            icon = {
+                "assessment": "🔍", 
+                "accommodation": "🔧", 
+                "report": "📊", 
+                "training": "🎓", 
+                "recruitment": "👤"
+            }
+            
+            priority_colors = {
+                "high": "#ef4444",
+                "medium": "#f59e0b", 
+                "low": "#10b981"
+            }
+            
+            color = priority_colors.get(activity['priority'], "#64748b")
+            
+            st.markdown(f"""
+            <div style="background: white; border-left: 4px solid {color}; 
+                        padding: 1rem; margin-bottom: 0.5rem; border-radius: 0 8px 8px 0; 
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 24px;">{icon.get(activity['type'], '•')}</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem;">
+                            {activity['message']}
+                        </div>
+                        <div style="font-size: 12px; color: #64748b;">
+                            {activity['time']} • Priorité: {activity['priority']}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("### 🎯 Objectifs du Mois")
+        
+        objectives = [
+            {"name": "Screenings TDAH", "current": 23, "target": 30, "color": "#c4bc74"},
+            {"name": "Accommodations", "current": 18, "target": 20, "color": "#3b82f6"},
+            {"name": "Formations", "current": 12, "target": 15, "color": "#10b981"},
+            {"name": "Évaluations", "current": 8, "target": 10, "color": "#f59e0b"}
+        ]
+        
+        for obj in objectives:
+            progress = (obj['current'] / obj['target']) * 100
+            st.markdown(f"""
+            <div style="background: white; padding: 1rem; margin-bottom: 1rem; 
+                        border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div style="display: flex; justify-content: between; margin-bottom: 0.5rem;">
+                    <span style="font-weight: 500; color: #1a1a1a;">{obj['name']}</span>
+                    <span style="color: {obj['color']}; font-weight: bold;">{obj['current']}/{obj['target']}</span>
+                </div>
+                <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden;">
+                    <div style="background: {obj['color']}; height: 100%; width: {progress}%; transition: width 0.3s ease;"></div>
+                </div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 0.25rem;">{progress:.1f}% complété</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+# --- MODULE TDAH AMÉLIORÉ ---
+def module_tdah():
+    st.markdown("# 🧠 Module TDAH")
+    st.markdown("*Trouble du Déficit de l'Attention avec ou sans Hyperactivité*")
+    
+    # Header avec statistiques clés
+    col1, col2, col3, col4 = st.columns(4)
+    
+    stats = [
+        ("Prévalence Mondiale", "5.0%", "#3b82f6"),
+        ("Adultes France", "3.0%", "#10b981"),
+        ("Ratio H/F", "2.3:1", "#c4bc74"),
+        ("Persistance Adulte", "66%", "#f59e0b")
+    ]
+    
+    for i, (label, value, color) in enumerate(stats):
+        with [col1, col2, col3, col4][i]:
+            st.markdown(f"""
+            <div style="text-align: center; background: white; padding: 1.5rem; 
+                        border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: {color}; font-size: 28px; font-weight: bold; margin-bottom: 0.5rem;">{value}</div>
+                <div style="color: #64748b; font-size: 14px; font-weight: 500;">{label}</div>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Onglets avec design moderne
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "📋 Screening Interactif", 
+        "📊 Statistiques", 
+        "🎯 Accommodations", 
+        "📈 Suivi & Analytics"
+    ])
+    
+    with tab1:
+        st.markdown("### 🔍 Screening TDAH Professionnel")
+        
+        col1, col2 = st.columns([2, 1])
+        
+        with col1:
+            st.markdown("""
+            <div class="highlight-card">
+                <h4 style="color: white; margin-bottom: 1rem;">🎯 Information Importante</h4>
+                <p style="color: white; margin: 0;">
+                Ce screening est un outil d'aide au dépistage basé sur les critères cliniques reconnus. 
+                Il ne remplace pas un diagnostic médical professionnel.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown("""
+            <div style="background: white; padding: 2rem; border-radius: 16px; 
+                        border: 1px solid #e2e8f0; text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 1rem;">🧠</div>
+                <div style="font-size: 18px; font-weight: bold; color: #1a1a1a; margin-bottom: 0.5rem;">
+                    Évaluation TDAH
+                </div>
+                <div style="color: #64748b; font-size: 14px;">
+                    Basée sur DSM-5
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Questionnaire interactif amélioré
+        with st.expander("🚀 Démarrer l'Évaluation TDAH", expanded=False):
+            scores = {"inattention": 0, "hyperactivity": 0, "impulsivity": 0}
+            
+            st.markdown("""
+            <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 2rem;">
+                <h5 style="color: #1a1a1a; margin-bottom: 1rem;">📝 Instructions</h5>
+                <p style="color: #64748b; margin: 0;">
+                Évaluez chaque affirmation selon votre expérience des <strong>6 derniers mois</strong> :
+                </p>
+                <ul style="color: #64748b; margin-top: 0.5rem;">
+                    <li><strong>0:</strong> Jamais ou rarement</li>
+                    <li><strong>1:</strong> Parfois</li>
+                    <li><strong>2:</strong> Souvent</li>
+                    <li><strong>3:</strong> Très souvent</li>
+                    <li><strong>4:</strong> Constamment</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Questions avec design amélioré
+            for i, item in enumerate(DATA['screening_questions']['adhd']):
+                category_colors = {
+                    "inattention": "#3b82f6",
+                    "hyperactivity": "#10b981", 
+                    "impulsivity": "#f59e0b"
+                }
+                
+                color = category_colors.get(item['category'], "#64748b")
+                category_name = {
+                    "inattention": "Inattention",
+                    "hyperactivity": "Hyperactivité",
+                    "impulsivity": "Impulsivité"
+                }.get(item['category'], item['category'])
+                
+                st.markdown(f"""
+                <div style="background: white; padding: 1.5rem; margin-bottom: 1rem; 
+                            border-radius: 12px; border: 1px solid #e2e8f0; 
+                            border-left: 4px solid {color};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span style="font-weight: 500; color: #1a1a1a;">Question {i+1}/8</span>
+                        <span class="stat-badge" style="background: {color};">{category_name}</span>
+                    </div>
+                    <p style="color: #1a1a1a; font-size: 16px; margin-bottom: 1rem; font-weight: 500;">
+                        {item['q']}
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                score = st.slider(
+                    f"Niveau pour la question {i+1}",
+                    min_value=0, max_value=4, value=0,
+                    key=f"adhd_{i}",
+                    help=f"Catégorie: {category_name}"
+                )
+                scores[item['category']] += score * item['weight']
+            
+            # Bouton d'évaluation stylé
+            col1, col2, col3 = st.columns([1, 1, 1])
+            with col2:
+                if st.button("🔬 Analyser les Résultats", use_container_width=True):
+                    total_score = sum(scores.values())
+                    max_possible = len(DATA['screening_questions']['adhd']) * 4 * 1.2
+                    percentage = (total_score / max_possible) * 100
+                    
+                    st.markdown("### 📊 Résultats de l'Évaluation")
+                    
+                    # Résultats avec design professionnel
+                    if percentage >= 60:
+                        st.markdown(f"""
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid #ef4444; 
+                                    border-radius: 16px; padding: 2rem; margin: 2rem 0;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 48px; margin-bottom: 1rem;">⚠️</div>
+                                <div style="font-size: 32px; font-weight: bold; color: #ef4444; margin-bottom: 1rem;">
+                                    {percentage:.1f}%
+                                </div>
+                                <div style="font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 1rem;">
+                                    Probabilité Élevée de TDAH
+                                </div>
+                                <div style="color: #64748b;">
+                                    Recommandation : Consultation avec un professionnel de santé pour évaluation approfondie
+                                </div>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    elif percentage >= 40:
+                        st.markdown(f"""
+                        <div style="background: rgba(245, 158, 11, 0.1); border: 2px solid #f59e0b; 
+                                    border-radius: 16px; padding: 2rem; margin: 2rem 0;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 48px; margin-bottom: 1rem;">⚠️</div>
+                                <div style="font-size: 32px; font-weight: bold; color: #f59e0b; margin-bottom: 1rem;">
+                                    {percentage:.1f}%
+                                </div>
+                                <div style="font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 1rem;">
+                                    Indicateurs Modérés
+                                </div>
+                                <div style="color: #64748b;">
+                                    Recommandation : Suivi et mise en place d'accommodations préventives
+                                </div>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"""
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid #10b981; 
+                                    border-radius: 16px; padding: 2rem; margin: 2rem 0;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 48px; margin-bottom: 1rem;">✅</div>
+                                <div style="font-size: 32px; font-weight: bold; color: #10b981; margin-bottom: 1rem;">
+                                    {percentage:.1f}%
+                                </div>
+                                <div style="font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 1rem;">
+                                    Probabilité Faible
+                                </div>
+                                <div style="color: #64748b;">
+                                    Aucune action immédiate nécessaire
+                                </div>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    
+                    # Répartition par catégorie
+                    st.markdown("### 📊 Analyse Détaillée par Catégorie")
+                    
+                    col1, col2, col3 = st.columns(3)
+                    categories = ["inattention", "hyperactivity", "impulsivity"]
+                    category_names = ["Inattention", "Hyperactivité", "Impulsivité"]
+                    category_colors = ["#3b82f6", "#10b981", "#f59e0b"]
+                    
+                    for i, (cat, name, color) in enumerate(zip(categories, category_names, category_colors)):
+                        with [col1, col2, col3][i]:
+                            cat_percentage = (scores[cat] / total_score * 100) if total_score > 0 else 0
+                            st.markdown(f"""
+                            <div style="background: white; padding: 1.5rem; border-radius: 12px; 
+                                        border: 1px solid #e2e8f0; text-align: center; 
+                                        border-top: 4px solid {color};">
+                                <div style="font-size: 24px; font-weight: bold; color: {color}; margin-bottom: 0.5rem;">
+                                    {cat_percentage:.0f}%
+                                </div>
+                                <div style="color: #1a1a1a; font-weight: 500;">{name}</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+    
+    with tab2:
+        st.markdown("### 📊 Statistiques et Données Cliniques TDAH")
+        
+        # Graphique défis workplace avec amélioration
+        challenges = DATA['adhd_statistics']['workplace_challenges']
+        
+        fig_challenges = go.Figure()
+        
+        fig_challenges.add_trace(go.Bar(
+            x=list(challenges.keys()),
+            y=list(challenges.values()),
+            marker=dict(
+                color=['#ef4444', '#f59e0b', '#3b82f6', '#10b981'],
+                line=dict(color='white', width=1)
+            ),
+            text=[f"{v}%" for v in challenges.values()],
+            textposition='auto',
+            textfont=dict(color='white', size=14, family='Inter'),
+            hovertemplate='<b>%{x}</b><br>%{y}% des employés TDAH<extra></extra>'
+        ))
+        
+        fig_challenges.update_layout(
+            title={
+                'text': 'Défis Principaux en Milieu Professionnel',
+                'x': 0.5,
+                'font': {'size': 18, 'family': 'Inter'}
+            },
+            xaxis_title='Type de Défi',
+            yaxis_title='Pourcentage d\'Employés Concernés (%)',
+            template='plotly_white',
+            height=400,
+            font=dict(family='Inter'),
+            showlegend=False
+        )
+        
+        st.plotly_chart(fig_challenges, use_container_width=True)
+        
+        # Facteurs de succès
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("#### 🎯 Facteurs de Succès au Travail")
+            success_factors = DATA['adhd_statistics']['success_factors']
+            
+            for factor, percentage in success_factors.items():
+                st.markdown(f"""
+                <div style="background: white; padding: 1rem; margin-bottom: 0.5rem; 
+                            border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #1a1a1a; font-weight: 500;">{factor}</span>
+                        <span style="color: #10b981; font-weight: bold;">{percentage}%</span>
+                    </div>
+                    <div style="background: #f1f5f9; height: 6px; border-radius: 3px; margin-top: 0.5rem;">
+                        <div style="background: #10b981; height: 100%; width: {percentage}%; border-radius: 3px;"></div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown("#### 📈 Données Épidémiologiques")
+            
+            epidemio_data = [
+                ("Prévalence mondiale", "5.0%", "Population générale"),
+                ("Adultes France", "3.0%", "Diagnostics confirmés"),
+                ("Persistance à l'âge adulte", "66%", "Depuis l'enfance"),
+                ("Comorbidités", "50%", "Autres troubles"),
+                ("Ratio Hommes/Femmes", "2.3:1", "Chez les adultes")
+            ]
+            
+            for title, value, desc in epidemio_data:
+                st.markdown(f"""
+                <div style="background: white; padding: 1rem; margin-bottom: 0.5rem; 
+                            border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="font-weight: 600; color: #1a1a1a; margin-bottom: 0.25rem;">{title}</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #c4bc74; margin-bottom: 0.25rem;">{value}</div>
+                    <div style="color: #64748b; font-size: 12px;">{desc}</div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+    with tab3:
+        st.markdown("### 🎯 Accommodations Workplace Recommandées")
+        
+        tdah_accommodations = [acc for acc in DATA['workplace_accommodations'] if acc['condition'] == 'ADHD']
+        
+        for acc in tdah_accommodations:
+            # Couleur selon l'impact
+            if acc['impact'] >= 9:
+                impact_color = "#10b981"
+                impact_label = "Impact Élevé"
+            elif acc['impact'] >= 7.5:
+                impact_color = "#f59e0b"
+                impact_label = "Impact Modéré"
+            else:
+                impact_color = "#3b82f6"
+                impact_label = "Impact Faible"
+            
+            # Couleur selon le coût
+            cost_colors = {"Aucun": "#10b981", "Faible": "#f59e0b", "Moyen": "#ef4444"}
+            cost_color = cost_colors[acc['cost']]
+            
+            with st.expander(f"🔧 {acc['accommodation']}", expanded=False):
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    st.markdown(f"""
+                    <div style="text-align: center; padding: 1rem; background: white; 
+                                border-radius: 8px; border: 2px solid {impact_color};">
+                        <div style="font-size: 28px; font-weight: bold; color: {impact_color};">
+                            {acc['impact']}/10
+                        </div>
+                        <div style="color: #64748b; font-size: 12px; margin-top: 0.5rem;">
+                            {impact_label}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with col2:
+                    st.markdown(f"""
+                    <div style="text-align: center; padding: 1rem; background: white; 
+                                border-radius: 8px; border: 2px solid {cost_color};">
+                        <div style="font-size: 18px; font-weight: bold; color: {cost_color};">
+                            {acc['cost']}
+                        </div>
+                        <div style="color: #64748b; font-size: 12px; margin-top: 0.5rem;">
+                            Niveau de Coût
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with col3:
+                    st.markdown(f"""
+                    <div style="text-align: center; padding: 1rem; background: white; 
+                                border-radius: 8px; border: 2px solid #3b82f6;">
+                        <div style="font-size: 18px; font-weight: bold; color: #3b82f6;">
+                            {acc['implementation']}
+                        </div>
+                        <div style="color: #64748b; font-size: 12px; margin-top: 0.5rem;">
+                            Temps d'Implémentation
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                # Bouton d'action
+                if st.button(f"✅ Recommander cette accommodation", key=f"recommend_{acc['accommodation']}"):
+                    st.success(f"✅ Accommodation '{acc['accommodation']}' ajoutée aux recommandations !")
+    
+    with tab4:
+        st.markdown("### 📈 Suivi et Analytics TDAH")
+        
+        # Simulation de données d'évolution
+        dates = pd.date_range(start='2024-01-01', periods=12, freq='M')
+        
+        # Données plus réalistes
+        base_attention = 60
+        base_organisation = 55
+        base_productivite = 65
+        
+        attention_scores = []
+        organisation_scores = []
+        productivite_scores = []
+        
+        for i in range(12):
+            # Amélioration progressive avec variations
+            improvement_factor = i * 0.8 + np.random.normal(0, 2)
+            
+            attention = min(100, max(30, base_attention + improvement_factor + np.random.normal(0, 3)))
+            organisation = min(100, max(30, base_organisation + improvement_factor + np.random.normal(0, 2.5)))
+            productivite = min(100, max(30, base_productivite + improvement_factor + np.random.normal(0, 3.5)))
+            
+            attention_scores.append(attention)
+            organisation_scores.append(organisation)
+            productivite_scores.append(productivite)
+        
+        progress_data = {
+            'Date': dates,
+            'Attention': attention_scores,
+            'Organisation': organisation_scores,
+            'Productivité': productivite_scores
+        }
+        
+        df_progress = pd.DataFrame(progress_data)
+        
+        fig_progress = go.Figure()
+        
+        # Ligne attention
+        fig_progress.add_trace(go.Scatter(
+            x=df_progress['Date'],
+            y=df_progress['Attention'],
+            mode='lines+markers',
+            name='Attention',
+            line=dict(color='#3b82f6', width=3),
+            marker=dict(size=8),
+            hovertemplate='<b>Attention</b><br>Date: %{x}<br>Score: %{y:.1f}%<extra></extra>'
+        ))
+        
+        # Ligne organisation
+        fig_progress.add_trace(go.Scatter(
+            x=df_progress['Date'],
+            y=df_progress['Organisation'],
+            mode='lines+markers',
+            name='Organisation',
+            line=dict(color='#10b981', width=3),
+            marker=dict(size=8),
+            hovertemplate='<b>Organisation</b><br>Date: %{x}<br>Score: %{y:.1f}%<extra></extra>'
+        ))
+        
+        # Ligne productivité
+        fig_progress.add_trace(go.Scatter(
+            x=df_progress['Date'],
+            y=df_progress['Productivité'],
+            mode='lines+markers',
+            name='Productivité',
+            line=dict(color='#c4bc74', width=3),
+            marker=dict(size=8),
+            hovertemplate='<b>Productivité</b><br>Date: %{x}<br>Score: %{y:.1f}%<extra></extra>'
+        ))
+        
+        fig_progress.update_layout(
+            title={
+                'text': 'Évolution des Métriques TDAH (Moyenne des Employés)',
+                'x': 0.5,
+                'font': {'size': 18, 'family': 'Inter'}
+            },
+            xaxis_title='Période',
+            yaxis_title='Score (%)',
+            hovermode='x unified',
+            template='plotly_white',
+            height=500,
+            font=dict(family='Inter'),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            )
+        )
+        
+        # Zone d'amélioration
+        fig_progress.add_shape(
+            type="rect",
+            x0=dates[0], x1=dates[-1],
+            y0=75, y1=100,
+            fillcolor="rgba(16, 185, 129, 0.1)",
+            line=dict(width=0),
+            layer="below"
+        )
+        
+        fig_progress.add_annotation(
+            x=dates[6], y=87.5,
+            text="Zone d'Excellence",
+            showarrow=False,
+            font=dict(size=12, color="#10b981")
+        )
+        
+        st.plotly_chart(fig_progress, use_container_width=True)
+        
+        # KPIs d'amélioration
+        col1, col2, col3 = st.columns(3)
+        
+        current_scores = [attention_scores[-1], organisation_scores[-1], productivite_scores[-1]]
+        initial_scores = [attention_scores[0], organisation_scores[0], productivite_scores[0]]
+        improvements = [(curr - init) for curr, init in zip(current_scores, initial_scores)]
+        
+        metrics = ["Attention", "Organisation", "Productivité"]
+        colors = ["#3b82f6", "#10b981", "#c4bc74"]
+        
+        for i, (metric, current, improvement, color) in enumerate(zip(metrics, current_scores, improvements, colors)):
+            with [col1, col2, col3][i]:
+                st.markdown(f"""
+                <div style="background: white; padding: 2rem; border-radius: 16px; 
+                            border: 1px solid #e2e8f0; text-align: center; 
+                            border-top: 4px solid {color};">
+                    <div style="color: {color}; font-size: 28px; font-weight: bold; margin-bottom: 0.5rem;">
+                        {current:.1f}%
+                    </div>
+                    <div style="color: #1a1a1a; font-weight: 600; margin-bottom: 0.5rem;">{metric}</div>
+                    <div style="color: #10b981; font-size: 14px; font-weight: 500;">
+                        {'+' if improvement > 0 else ''}{improvement:.1f}% cette année
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+# --- FONCTION PRINCIPALE ---
+def main():
+    # Application du CSS
+    apply_professional_css()
+    
+    # Header professionnel
+    render_header()
+    
+    # Sidebar
+    page = render_sidebar()
+    
+    # Routing des modules
+    if "Dashboard Principal" in page:
+        dashboard_principal()
+    elif "Module TDAH" in page:
+        module_tdah()
+    # ... autres modules à implémenter
+    
+    # Footer professionnel
+    st.markdown("""
+    <div class="footer">
+        <p>© 2025 Ubisoft Entertainment - NeuroInsight Hub Workspace | Version 2.1 Professional</p>
+        <p style="font-size: 12px; margin-top: 0.5rem;">
+            Plateforme RH de gestion de la neurodiversité • Données sécurisées • Conforme RGPD
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
 # --- EXECUTION ---
 if __name__ == "__main__":
-    apply_custom_css()
     main()
-
-    # Footer
-    st.markdown("---")
-    st.markdown(
-        "<div style='text-align:center; margin-top:50px; color:#888;'>"
-        "© 2025 Ubisoft – NeuroInsight Hub Workspace | Version 2.0"
-        "</div>",
-        unsafe_allow_html=True
-    )
