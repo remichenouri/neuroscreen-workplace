@@ -1146,7 +1146,7 @@ elif page == "📈 Analytics & Reporting":
         fig_pred.update_layout(
             title='Prédiction Évolution Employés Neurodivers',
             xaxis_title='Mois',
-            yaxis_title='Nombre d'Employés',
+            yaxis_title="Nombre d'Employés",
             title_font_color='#003f7f',
             font_family="Inter"
         )
