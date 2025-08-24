@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroInsight Hub - Workspace</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <h2>NeuroInsight Hub</h2>
+                    <span class="workspace-badge">Workspace</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-module="dashboard">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-module="tdah">
+                    <span class="nav-icon">🧠</span>
+                    Module TDAH
+                </a>
+                <a href="#" class="nav-item" data-module="autisme">
+                    <span class="nav-icon">🎯</span>
+                    Module Autisme
+                </a>
+                <a href="#" class="nav-item" data-module="observatoire">
+                    <span class="nav-icon">📈</span>
+                    Observatoire
+                </a>
+                <a href="#" class="nav-item" data-module="neuroscreen">
+                    <span class="nav-icon">🔬</span>
+                    NeuroScreen
+                </a>
+                <a href="#" class="nav-item" data-module="workplace">
+                    <span class="nav-icon">🏢</span>
+                    Workplace
+                </a>
+                <a href="#" class="nav-item" data-module="recrutement">
+                    <span class="nav-icon">👥</span>
+                    Recrutement
+                </a>
+                <a href="#" class="nav-item" data-module="analytics">
+                    <span class="nav-icon">📋</span>
+                    Analytics
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Module -->
+            <div id="dashboard" class="module active">
+                <header class="module-header">
+                    <h1>Tableau de Bord Neurodiversité</h1>
+                    <div class="header-actions">
+                        <button class="btn btn--secondary btn--sm">Actualiser</button>
+                        <button class="btn btn--primary btn--sm">Exporter</button>
+                    </div>
+                </header>
+
+                <div class="dashboard-grid">
+                    <div class="metric-card">
+                        <h3>Employés Neurodivers</h3>
+                        <div class="metric-value">187</div>
+                        <div class="metric-change positive">+15.0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Taux de Rétention</h3>
+                        <div class="metric-value">92.3%</div>
+                        <div class="metric-change positive">+2.1%</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Score Satisfaction</h3>
+                        <div class="metric-value">4.2/5</div>
+                        <div class="metric-change positive">+0.3</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Productivité</h3>
+                        <div class="metric-value">+18.5%</div>
+                        <div class="metric-change positive">+5.2%</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>Répartition Neurodiversité</h3>
+                        <div id="diversityChart" style="position: relative; height: 300px;">
+                            <canvas></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Performance par Département</h3>
+                        <div id="departmentChart" style="position: relative; height: 300px;">
+                            <canvas></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TDAH Module -->
+            <div id="tdah" class="module">
+                <header class="module-header">
+                    <h1>Module TDAH - Évaluation & Suivi</h1>
+                </header>
+
+                <div class="tdah-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Prévalence Mondiale</span>
+                        <span class="stat-value">5.0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Adultes France</span>
+                        <span class="stat-value">3.0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Ratio H/F</span>
+                        <span class="stat-value">2.3:1</span>
+                    </div>
+                </div>
+
+                <div class="screening-section">
+                    <h2>Screening TDAH</h2>
+                    <form id="tdahForm" class="screening-form">
+                        <div class="form-group">
+                            <label class="form-label">Avez-vous souvent du mal à prêter attention aux détails ou faites-vous des erreurs d'inattention au travail ?</label>
+                            <select class="form-control" name="q1" required>
+                                <option value="">Sélectionnez une réponse</option>
+                                <option value="0">Jamais</option>
+                                <option value="1">Parfois</option>
+                                <option value="2">Souvent</option>
+                                <option value="3">Très souvent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Avez-vous des difficultés à maintenir votre attention sur des tâches ou des activités ?</label>
+                            <select class="form-control" name="q2" required>
+                                <option value="">Sélectionnez une réponse</option>
+                                <option value="0">Jamais</option>
+                                <option value="1">Parfois</option>
+                                <option value="2">Souvent</option>
+                                <option value="3">Très souvent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Vous sentez-vous souvent agité(e) ou avez-vous besoin de bouger constamment ?</label>
+                            <select class="form-control" name="q3" required>
+                                <option value="">Sélectionnez une réponse</option>
+                                <option value="0">Jamais</option>
+                                <option value="1">Parfois</option>
+                                <option value="2">Souvent</option>
+                                <option value="3">Très souvent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Avez-vous tendance à interrompre les autres ou à avoir du mal à attendre votre tour ?</label>
+                            <select class="form-control" name="q4" required>
+                                <option value="">Sélectionnez une réponse</option>
+                                <option value="0">Jamais</option>
+                                <option value="1">Parfois</option>
+                                <option value="2">Souvent</option>
+                                <option value="3">Très souvent</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn--primary">Calculer le Score</button>
+                    </form>
+                    <div id="tdahResult" class="result-panel hidden"></div>
+                </div>
+            </div>
+
+            <!-- Autisme Module -->
+            <div id="autisme" class="module">
+                <header class="module-header">
+                    <h1>Module Autisme - Évaluation & Support</h1>
+                </header>
+
+                <div class="autism-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Prévalence Mondiale</span>
+                        <span class="stat-value">1.0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Taux d'Emploi</span>
+                        <span class="stat-value">22.0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Chômage</span>
+                        <span class="stat-value">85.0%</span>
+                    </div>
+                </div>
+
+                <div class="screening-section">
+                    <h2>Screening Autisme</h2>
+                    <form id="autismeForm" class="screening-form">
+                        <div class="form-group">
+                            <label class="form-label">Trouvez-vous difficile de maintenir une conversation bidirectionnelle ?</label>
+                            <select class="form-control" name="a1" required>
+                                <option value="">Sélectionnez une réponse</option>
+                                <option value="0">Pas du tout</option>
+                                <option value="1">Légèrement</option>
+                                <option value="2">Modérément</option>
+                                <option value="3">Beaucoup</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Êtes-vous sensible à certains sons, lumières ou textures ?</label>
+                            <select class="form-control" name="a2" required>
+                                <option value="">Sélectionnez une réponse</option>
+                                <option value="0">Pas du tout</option>
+                                <option value="1">Légèrement</option>
+                                <option value="2">Modérément</option>
+                                <option value="3">Beaucoup</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Préférez-vous suivre des routines établies et êtes-vous perturbé(e) par les changements ?</label>
+                            <select class="form-control" name="a3" required>
+                                <option value="">Sélectionnez une réponse</option>
+                                <option value="0">Pas du tout</option>
+                                <option value="1">Légèrement</option>
+                                <option value="2">Modérément</option>
+                                <option value="3">Beaucoup</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn--primary">Calculer le Score</button>
+                    </form>
+                    <div id="autismeResult" class="result-panel hidden"></div>
+                </div>
+            </div>
+
+            <!-- Observatoire Module -->
+            <div id="observatoire" class="module">
+                <header class="module-header">
+                    <h1>Observatoire des Données</h1>
+                </header>
+
+                <div class="observatoire-grid">
+                    <div class="data-section">
+                        <h3>Données Régionales France</h3>
+                        <div class="regional-data">
+                            <div class="region-item">
+                                <span class="region-name">Île-de-France</span>
+                                <span class="region-stats">TDAH: 3.2% | Autisme: 1.1%</span>
+                                <span class="region-pop">12M habitants</span>
+                            </div>
+                            <div class="region-item">
+                                <span class="region-name">PACA</span>
+                                <span class="region-stats">TDAH: 3.4% | Autisme: 0.9%</span>
+                                <span class="region-pop">5M habitants</span>
+                            </div>
+                            <div class="region-item">
+                                <span class="region-name">Nouvelle-Aquitaine</span>
+                                <span class="region-stats">TDAH: 3.1% | Autisme: 1.0%</span>
+                                <span class="region-pop">6M habitants</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Évolution Temporelle</h3>
+                        <div id="evolutionChart" style="position: relative; height: 300px;">
+                            <canvas></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NeuroScreen Module -->
+            <div id="neuroscreen" class="module">
+                <header class="module-header">
+                    <h1>Évaluations Neuroscientifiques</h1>
+                </header>
+
+                <div class="neuroscreen-grid">
+                    <div class="assessment-card">
+                        <h3>Attention Soutenue</h3>
+                        <p>Durée: 15 minutes | Score: 0-100</p>
+                        <p>Mesure la capacité à maintenir l'attention sur une tâche</p>
+                        <button class="btn btn--primary btn--full-width">Démarrer le Test</button>
+                    </div>
+                    <div class="assessment-card">
+                        <h3>Mémoire de Travail</h3>
+                        <p>Durée: 10 minutes | Score: 0-100</p>
+                        <p>Évalue la capacité à manipuler l'information en mémoire</p>
+                        <button class="btn btn--primary btn--full-width">Démarrer le Test</button>
+                    </div>
+                    <div class="assessment-card">
+                        <h3>Flexibilité Cognitive</h3>
+                        <p>Durée: 12 minutes | Score: 0-100</p>
+                        <p>Mesure l'adaptation aux changements de règles</p>
+                        <button class="btn btn--primary btn--full-width">Démarrer le Test</button>
+                    </div>
+                </div>
+
+                <div class="results-section">
+                    <h3>Derniers Résultats</h3>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <span class="test-name">Attention Soutenue</span>
+                            <span class="test-score">Score: 78/100</span>
+                            <span class="test-date">23/08/2025</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="test-name">Mémoire de Travail</span>
+                            <span class="test-score">Score: 85/100</span>
+                            <span class="test-date">22/08/2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workplace Module -->
+            <div id="workplace" class="module">
+                <header class="module-header">
+                    <h1>Gestion Workplace</h1>
+                </header>
+
+                <div class="accommodations-grid">
+                    <div class="accommodation-card">
+                        <h3>Environnement de travail calme</h3>
+                        <div class="accommodation-details">
+                            <span class="condition-tag adhd">TDAH</span>
+                            <span class="impact-score">Impact: 8.5/10</span>
+                            <span class="cost-indicator low">Coût Faible</span>
+                            <span class="time-indicator">Implémentation: 1 semaine</span>
+                        </div>
+                    </div>
+                    <div class="accommodation-card">
+                        <h3>Instructions écrites détaillées</h3>
+                        <div class="accommodation-details">
+                            <span class="condition-tag autism">Autisme</span>
+                            <span class="impact-score">Impact: 9.2/10</span>
+                            <span class="cost-indicator low">Coût Faible</span>
+                            <span class="time-indicator">Implémentation: 2 jours</span>
+                        </div>
+                    </div>
+                    <div class="accommodation-card">
+                        <h3>Pauses régulières</h3>
+                        <div class="accommodation-details">
+                            <span class="condition-tag adhd">TDAH</span>
+                            <span class="impact-score">Impact: 7.8/10</span>
+                            <span class="cost-indicator none">Aucun coût</span>
+                            <span class="time-indicator">Implémentation: Immédiat</span>
+                        </div>
+                    </div>
+                    <div class="accommodation-card">
+                        <h3>Horaires flexibles</h3>
+                        <div class="accommodation-details">
+                            <span class="condition-tag autism">Autisme</span>
+                            <span class="impact-score">Impact: 8.7/10</span>
+                            <span class="cost-indicator low">Coût Faible</span>
+                            <span class="time-indicator">Implémentation: 1 semaine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recrutement Module -->
+            <div id="recrutement" class="module">
+                <header class="module-header">
+                    <h1>Recrutement Neurodiversité</h1>
+                </header>
+
+                <div class="recruitment-stats">
+                    <div class="stat-card">
+                        <h3>Entretiens Inclusifs</h3>
+                        <div class="stat-number">156</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Embauches Neurodivers</h3>
+                        <div class="stat-number">43</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Rétention 12 mois</h3>
+                        <div class="stat-number">89.3%</div>
+                    </div>
+                </div>
+
+                <div class="performance-breakdown">
+                    <h3>Évaluations de Performance</h3>
+                    <div class="performance-bars">
+                        <div class="performance-item">
+                            <span class="performance-label">Excellent</span>
+                            <div class="performance-bar">
+                                <div class="performance-fill" style="width: 34.9%"></div>
+                            </div>
+                            <span class="performance-value">34.9%</span>
+                        </div>
+                        <div class="performance-item">
+                            <span class="performance-label">Bon</span>
+                            <div class="performance-bar">
+                                <div class="performance-fill" style="width: 48.8%"></div>
+                            </div>
+                            <span class="performance-value">48.8%</span>
+                        </div>
+                        <div class="performance-item">
+                            <span class="performance-label">Satisfaisant</span>
+                            <div class="performance-bar">
+                                <div class="performance-fill" style="width: 16.3%"></div>
+                            </div>
+                            <span class="performance-value">16.3%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Module -->
+            <div id="analytics" class="module">
+                <header class="module-header">
+                    <h1>Analytics & Reporting</h1>
+                </header>
+
+                <div class="analytics-dashboard">
+                    <div class="department-analysis">
+                        <h3>Performance par Département</h3>
+                        <div class="department-grid">
+                            <div class="department-card">
+                                <h4>IT</h4>
+                                <div class="department-metrics">
+                                    <span class="metric">Neurodivers: 22.4%</span>
+                                    <span class="metric">Productivité: 118.7</span>
+                                    <span class="metric">Innovation: 8.9/10</span>
+                                    <span class="metric">Satisfaction: 4.3/5</span>
+                                </div>
+                            </div>
+                            <div class="department-card">
+                                <h4>Design</h4>
+                                <div class="department-metrics">
+                                    <span class="metric">Neurodivers: 28.1%</span>
+                                    <span class="metric">Productivité: 125.2</span>
+                                    <span class="metric">Innovation: 9.4/10</span>
+                                    <span class="metric">Satisfaction: 4.5/5</span>
+                                </div>
+                            </div>
+                            <div class="department-card">
+                                <h4>Finance</h4>
+                                <div class="department-metrics">
+                                    <span class="metric">Neurodivers: 11.8%</span>
+                                    <span class="metric">Productivité: 108.3</span>
+                                    <span class="metric">Innovation: 7.1/10</span>
+                                    <span class="metric">Satisfaction: 3.9/5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-actions">
+                        <button class="btn btn--primary">Générer Rapport Mensuel</button>
+                        <button class="btn btn--secondary">Exporter Données</button>
+                        <button class="btn btn--outline">Planifier Rapport</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
