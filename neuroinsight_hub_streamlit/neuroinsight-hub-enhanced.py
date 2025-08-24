@@ -1184,24 +1184,33 @@ elif page == "📊 Observatoire Données":
     })
     regions["Est. TDAH"] = (regions["Population"] * regions["TDAH (%)"] / 100).astype(int)
     regions["Est. Autisme"] = (regions["Population"] * regions["Autisme (%)"] / 100).astype(int)
+   # Remplacer la carte choroplèthe par un bar chart pour la partie “Prévalence par Région”
+
+    st.markdown("### 🗺️ Prévalence par Région (France)")
     
-    # Carte choroplèthe simplifiée
-    fig_map = px.choropleth(
-        regions,
-        geojson="https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions-version-simplifiee.geojson",
-        featureidkey="properties.nom",
-        locations="Région",
-        color="Total (%)",
-        hover_data=["TDAH (%)","Autisme (%)"],
-        title="Cartographie de la Prévalence par Région",
-        color_continuous_scale="Blues"
+    # Données régionales déjà calculées : 'regions'
+    # On peut ajouter une colonne “Total (%)” pour faciliter
+    regions["Total (%)"] = regions["TDAH (%)"] + regions["Autisme (%)"]
+    
+    # Bar chart Plotly
+    fig_bar_regions = px.bar(
+        regions.sort_values("Total (%)", ascending=False),
+        x="Région", y=["TDAH (%)", "Autisme (%)"],
+        title="Prévalence de TDAH et Autisme par Région",
+        labels={"value":"Prévalence (%)", "variable":"Condition"},
+        color_discrete_map={"TDAH (%)":"#0066cc", "Autisme (%)":"#003f7f"}
     )
-    fig_map.update_geos(fitbounds="locations", visible=False)
-    st.plotly_chart(fig_map, use_container_width=True)
+    fig_bar_regions.update_layout(
+        barmode="group",
+        xaxis_tickangle=-45,
+        font_family="Inter"
+    )
+    st.plotly_chart(fig_bar_regions, use_container_width=True)
     
-    # Tableau détaillé
+    # On conserve ensuite le tableau détaillé
     st.markdown("#### 📋 Tableau de Données Régionales")
     st.dataframe(regions.set_index("Région"), use_container_width=True)
+
     
     # 3. Comparaisons Internationales
     st.markdown("### 🌍 Comparaisons Internationales")
