@@ -957,8 +957,7 @@ elif page == "👥 Recrutement Neurodiversité":
             Ce poste en {contract_type} est basé à {location}.
 
             ## Compétences requises
-            """ + '
-'.join([f"- {skill}" for skill in skills]) + f"""
+            """ + ''.join([f"- {skill}" for skill in skills]) + f"""
 
             ## Notre engagement neurodiversité
             Nous valorisons la diversité cognitive et nous nous engageons à créer un environnement 
