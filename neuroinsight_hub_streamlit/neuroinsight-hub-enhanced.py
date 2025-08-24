@@ -443,44 +443,42 @@ elif page == "🧠 Module TDAH":
                 total_score = sum(scores)
                 inattention_score = sum(scores[:6])
                 hyperactivity_score = sum(scores[6:])
-
+            
                 st.markdown("### 📊 Résultats du Screening TDAH")
-
+            
+                # Profil détaillé — ne pas indenter le HTML à l’intérieur de la chaîne
                 st.markdown(f"""
-                <div class="profile-card">
-                  <div class="profile-title">📋 Votre Profil TDAH Détaillé</div>
-                  …
-                </div>
-                """, unsafe_allow_html=True)
-
-                    <div class="profile-section">
-                        <h4>🎯 Scores Obtenus</h4>
-                        <p><strong>Score Total:</strong> {total_score}/48</p>
-                        <p><strong>Inattention:</strong> {inattention_score}/24</p>
-                        <p><strong>Hyperactivité/Impulsivité:</strong> {hyperactivity_score}/24</p>
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>📈 Interprétation</h4>
-                        {"<p><strong style='color: #dc2626;'>Risque Élevé:</strong> Vos scores suggèrent des symptômes significatifs de TDAH. Une évaluation professionnelle est recommandée.</p>" if total_score >= 24 else 
-                         "<p><strong style='color: #ea580c;'>Risque Modéré:</strong> Certains symptômes sont présents. Un suivi peut être bénéfique.</p>" if total_score >= 12 else
-                         "<p><strong style='color: #16a34a;'>Risque Faible:</strong> Peu de symptômes détectés. Continuez à surveiller votre bien-être au travail.</p>"}
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>💡 Recommandations Personnalisées</h4>
-                        {"<ul><li>Consultez un professionnel de santé spécialisé en TDAH</li><li>Mettez en place des accommodations workplace immédiates</li><li>Utilisez des outils de gestion du temps et d'organisation</li><li>Demandez un environnement de travail calme</li></ul>" if total_score >= 24 else
-                         "<ul><li>Explorez des stratégies d'organisation</li><li>Utilisez des techniques de gestion du temps</li><li>Demandez des pauses régulières</li><li>Considérez un coaching en productivité</li></ul>" if total_score >= 12 else
-                         "<ul><li>Maintenez vos bonnes pratiques actuelles</li><li>Restez attentif à votre bien-être</li><li>Explorez des outils de productivité</li><li>Participez aux formations neurodiversité</li></ul>"}
-                    </div>
-
-                    <div class="profile-section">
-                        <h4>🎯 Prochaines Étapes</h4>
-                        {"<ol><li>Prenez rendez-vous avec votre médecin traitant</li><li>Contactez les RH pour discuter d'accommodations</li><li>Explorez le catalogue d'accommodations de cette plateforme</li><li>Rejoignez notre groupe de support TDAH</li></ol>" if total_score >= 24 else
-                         "<ol><li>Discutez avec votre manager de vos besoins</li><li>Explorez les outils d'organisation disponibles</li><li>Participez aux ateliers sur la gestion du temps</li><li>Effectuez un nouveau screening dans 3 mois</li></ol>"}
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+            <div class="profile-card">
+              <div class="profile-title">📋 Votre Profil TDAH Détaillé</div>
+            
+              <div class="profile-section">
+                <h4>🎯 Scores Obtenus</h4>
+                <p><strong>Score Total:</strong> {total_score}/48</p>
+                <p><strong>Inattention:</strong> {inattention_score}/24</p>
+                <p><strong>Hyperactivité/Impulsivité:</strong> {hyperactivity_score}/24</p>
+              </div>
+            
+              <div class="profile-section">
+                <h4>📈 Interprétation</h4>
+                {"<p><strong style='color: #dc2626;'>Risque Élevé:</strong> Vos scores suggèrent des symptômes significatifs de TDAH. Une évaluation professionnelle est recommandée.</p>" if total_score >= 24 else 
+                 "<p><strong style='color: #ea580c;'>Risque Modéré:</strong> Certains symptômes sont présents. Un suivi peut être bénéfique.</p>" if total_score >= 12 else
+                 "<p><strong style='color: #16a34a;'>Risque Faible:</strong> Peu de symptômes détectés. Continuez à surveiller votre bien-être au travail.</p>"}
+              </div>
+            
+              <div class="profile-section">
+                <h4>💡 Recommandations Personnalisées</h4>
+                {"<ul><li>Consultez un professionnel de santé spécialisé en TDAH</li><li>Mettez en place des accommodations workplace immédiates</li><li>Utilisez des outils de gestion du temps et d'organisation</li><li>Demandez un environnement de travail calme</li></ul>" if total_score >= 24 else
+                 "<ul><li>Explorez des stratégies d'organisation</li><li>Utilisez des techniques de gestion du temps</li><li>Demandez des pauses régulières</li><li>Considérez un coaching en productivité</li></ul>" if total_score >= 12 else
+                 "<ul><li>Maintenez vos bonnes pratiques actuelles</li><li>Restez attentif à votre bien-être</li><li>Explorez des outils de productivité</li><li>Participez aux formations neurodiversité</li></ul>"}
+              </div>
+            
+              <div class="profile-section">
+                <h4>🎯 Prochaines Étapes</h4>
+                {"<ol><li>Prenez rendez-vous avec votre médecin traitant</li><li>Contactez les RH pour discuter d'accommodations</li><li>Explorez le catalogue d'accommodations de cette plateforme</li><li>Rejoignez notre groupe de support TDAH</li></ol>" if total_score >= 24 else
+                 "<ol><li>Discutez avec votre manager de vos besoins</li><li>Explorez les outils d'organisation disponibles</li><li>Participez aux ateliers sur la gestion du temps</li><li>Effectuez un nouveau screening dans 3 mois</li></ol>"}
+              </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     with tab2:
         st.markdown("### 📊 Statistiques TDAH")
