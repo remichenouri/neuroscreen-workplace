@@ -1,0 +1,6 @@
+employee_id,department,creative_score,burnout_scale,communication_style,adhd_risk,autism_risk
+E001,Design,87,3,Visual,0,0
+E002,Development,72,6,Analytical,1,0
+E003,QA,91,2,Detail-oriented,0,1
+E004,Marketing,66,7,Social,1,0
+E005,Management,78,4,Strategic,0,0
