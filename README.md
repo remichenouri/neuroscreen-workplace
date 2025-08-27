@@ -3,6 +3,10 @@
 *Plateforme RH professionnelle pour la gestion de la neurodiversité en entreprise*
 
 [![Demo](https://img.shields.io/badge/Demo-Live-brightgreen)](https://neuroscreen-demo.streamlit.app) [![GitHub stars](https://img.shields.io/github/stars/remichenouri/neuroscreen-workplace?style=social)](https://github.com/remichenouri/neuroscreen-workplace) [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/License-Enterprise-gold)](https://github.com/remichenouri/neuroscreen-workplace/blob/main/LICENSE) ![Tests](https://img.shields.io/badge/Tests-156%20passed-green) ![Coverage](https://img.shields.io/badge/Coverage-94%25-brightgreen) ![Uptime](https://img.shields.io/badge/Uptime-99.9%25-brightgreen)
+![Python](https://img.shields.io/badge/python-3.9+-blue.svg)
+![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)
+![License](https://img.shields.io/badge/license-Enterprise-green.svg)
+![Build](https://img.shields.io/github/workflow/status/remichenouri/neuroscreen-workplace/CI)
 
 ## 🔗 Table des matières
 
