@@ -84,3 +84,30 @@ volumes:
 networks:
   analytics_network:
     driver: bridge
+ersion: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - POSTGRES_HOST=db
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+      - redis
+      
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: neuroinsight
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secure_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      
+  redis:
+    image: redis:7-alpine
+    
+volumes:
+  postgres_data:
