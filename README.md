@@ -7,6 +7,10 @@
 ![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)
 ![License](https://img.shields.io/badge/license-Enterprise-green.svg)
 ![Build](https://img.shields.io/github/workflow/status/remichenouri/neuroscreen-workplace/CI)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Coverage](https://img.shields.io/badge/coverage-85%25-yellow.svg)
+
 
 ## 🔗 Table des matières
 
