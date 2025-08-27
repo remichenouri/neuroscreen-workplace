@@ -1,5 +1,0 @@
-[server]
-workingDir = "neuroinsight_hub_streamlit"
-headless    = true
-enableCORS  = false
-port        = 8501
