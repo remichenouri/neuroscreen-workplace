@@ -1,0 +1,24 @@
+{
+  "wellness_metrics": {
+    "overall_score": 75,
+    "engagement_level": 80,
+    "stress_level": 20
+  },
+  "performance_data": [
+    {"department":"Sales","productivity":70,"engagement":80,"wellbeing":75},
+    {"department":"HR","productivity":60,"engagement":65,"wellbeing":70}
+  ],
+  "neuro_insights": [
+    {"metric":"Attention","value":85,"trend":"up","description":"Bonne concentration"},
+    {"metric":"Memory","value":78,"trend":"down","description":"Légère baisse"}
+  ],
+  "learning_programs": [
+    {"name":"Onboarding","completion":90,"participants":120},
+    {"name":"Sécurité","completion":75,"participants":80}
+  ],
+  "recent_activities": [
+    {"time":"2h","message":"Connexion à la plateforme"},
+    {"time":"1j","message":"Terminé le module Sécurité"}
+  ]
+}
+

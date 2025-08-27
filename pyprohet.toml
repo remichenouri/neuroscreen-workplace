@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ubisoft-people-analytics"
+version = "1.0.0"
+description = "IA-powered people analytics for gaming studios"
+authors = [{name = "Rémi Chenouri", email = "chenouri.remi@proton.me"}]
+license = {text = "MIT"}
+requires-python = ">=3.9"
+
+[tool.ruff]
+target-version = "py39"
+line-length = 88
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "--strict-markers --disable-warnings"

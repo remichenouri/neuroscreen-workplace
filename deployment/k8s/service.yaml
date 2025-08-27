@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ubisoft-analytics-service
+  namespace: default
+  labels:
+    app: ubisoft-analytics
+spec:
+  type: ClusterIP
+  selector:
+    app: ubisoft-analytics
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8501
+  - name: metrics
+    protocol: TCP
+    port: 9090
+    targetPort: 9090
